@@ -18,13 +18,13 @@ st.markdown("""
 
 st.divider()
 
-st.subheader("📊 Purpose Score")
+col1, col2 = st.columns([5, 1])
 
-st.metric(
-    "คะแนนความสอดคล้องกับเป้าหมาย",
-    "84/100",
-    "+2"
-)
+with col1:
+    st.markdown("### 📊 คะแนนความสอดคล้องกับเป้าหมาย")
+
+with col2:
+    st.markdown("## 84/100")
 
 st.divider()
 
