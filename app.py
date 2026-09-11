@@ -18,23 +18,15 @@ st.markdown("""
 
 st.divider()
 
-col1, col2 = st.columns([5, 1])
+st.markdown("## 📊 คะแนนความสอดคล้องกับเป้าหมาย   84/100")
 
-with col1:
-    st.markdown("### 📊 คะแนนความสอดคล้องกับเป้าหมาย")
+st.write("🎯 เป้าหมาย: เกษียณอายุในอีก 7 ปี")
 
-with col2:
-    st.markdown("## 84/100")
+st.write("✅ คุณยังอยู่บนเส้นทาง")
 
-st.divider()
+st.write("📈 ดีขึ้นจากเดือนก่อน +2")
 
-col1, col2 = st.columns(2)
-
-with col1:
-    st.metric("Years To Goal", "7")
-
-with col2:
-    st.metric("On Track", "✅ ใช่")
+st.caption("วัดว่าพอร์ตและการตัดสินใจของคุณสอดคล้องกับเป้าหมายมากแค่ไหน")
 
 st.divider()
 
