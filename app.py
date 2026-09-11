@@ -77,3 +77,27 @@ st.info("""
 
 และทั้งหมดเริ่มต้นจากการตัดสินใจเล็ก ๆ ของคุณในวันนี้
 """)
+st.divider()
+
+st.subheader("⏳ เวลาสู่เป้าหมาย")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(
+        "เหลืออีก",
+        "7 ปี"
+    )
+
+with col2:
+    st.metric(
+        "ความคืบหน้า",
+        "62%"
+    )
+
+with col3:
+    st.metric(
+        "สถานะ",
+        "On Track ✅"
+    )
+    
