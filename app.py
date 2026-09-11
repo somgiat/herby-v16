@@ -14,8 +14,32 @@ st.markdown("""
 ### เราไม่ได้ช่วยคุณเลือกสินทรัพย์
 
 ## เราช่วยให้คุณไม่ลืมเป้าหมาย
+
 """)
 
+st.divider()
+
+st.subheader("⏳ เวลาสู่เป้าหมาย")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(
+        "เหลืออีก",
+        "7 ปี"
+    )
+
+with col2:
+    st.metric(
+        "ความคืบหน้า",
+        "62%"
+    )
+
+with col3:
+    st.metric(
+        "สถานะ",
+        "On Track ✅"
+    )
 st.divider()
 
 st.subheader("📊 สถานะปัจจุบัน")
@@ -44,9 +68,6 @@ st.progress(62)
 st.success("""
 เกษียณอายุ 60 ปี
 
-เหลืออีก 7 ปี
-
-ความคืบหน้า 62%
 """)
 
 st.divider()
@@ -77,27 +98,5 @@ st.info("""
 
 และทั้งหมดเริ่มต้นจากการตัดสินใจเล็ก ๆ ของคุณในวันนี้
 """)
-st.divider()
 
-st.subheader("⏳ เวลาสู่เป้าหมาย")
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.metric(
-        "เหลืออีก",
-        "7 ปี"
-    )
-
-with col2:
-    st.metric(
-        "ความคืบหน้า",
-        "62%"
-    )
-
-with col3:
-    st.metric(
-        "สถานะ",
-        "On Track ✅"
-    )
     
