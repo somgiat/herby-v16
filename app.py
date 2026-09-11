@@ -2,12 +2,54 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Herby",
-    page_icon="❤️"
+    page_icon="❤️",
+    layout="wide"
 )
 
 st.title("❤️ Herby")
 
 st.subheader("Your Digital Financial Mentor")
 
-st.write("เราไม่ได้ช่วยคุณเลือกสินทรัพย์")
-st.write("เราช่วยให้คุณไม่ลืมเป้าหมาย")
+st.markdown("""
+### เราไม่ได้ช่วยคุณเลือกสินทรัพย์
+
+## เราช่วยให้คุณไม่ลืมเป้าหมาย
+""")
+
+st.divider()
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.metric(
+        "Purpose Score",
+        "84",
+        "+2"
+    )
+
+with col2:
+    st.metric(
+        "Years To Goal",
+        "7",
+        "-0.2"
+    )
+
+st.divider()
+
+st.subheader("🎯 เป้าหมายหลัก")
+
+st.success("""
+เกษียณอายุในอีก 7 ปี
+
+ความคืบหน้า 62%
+""")
+
+st.divider()
+
+st.subheader("📝 ข้อความจากเฮอร์บี้")
+
+st.info("""
+ตลาดเปลี่ยนทุกวัน
+
+แต่เป้าหมายของคุณไม่ควรเปลี่ยนทุกวัน
+""")
