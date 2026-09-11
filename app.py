@@ -15,7 +15,14 @@ st.markdown("""
 
 ## เราช่วยให้คุณไม่ลืมเป้าหมาย
 """)
+st.subheader("📊 Purpose Score")
 
+st.metric(
+    "คะแนนความสอดคล้องกับเป้าหมาย",
+    "84/100",
+    "+2"
+)
+``
 st.divider()
 
 col1, col2 = st.columns(2)
