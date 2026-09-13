@@ -152,4 +152,89 @@ Herby อยากเข้าใจเป้าหมาย
 
         st.divider()
 
-        
+        if st.button("➡️ วิเคราะห์ Investment DNA", key="dna_button"):
+
+    st.balloons()
+
+    # ประเมิน DNA แบบง่าย V1
+
+    dna_type = "Balanced Investor"
+
+    if drawdown == "ทยอยซื้อเพิ่ม" and volatility >= 7:
+        dna_type = "🚀 Growth Hunter"
+
+    elif drawdown == "ถือไว้" and volatility >= 5:
+        dna_type = "📈 Long-Term Builder"
+
+    elif drawdown == "ขายบางส่วน":
+        dna_type = "⚖️ Balanced Investor"
+
+    elif drawdown == "ขายทั้งหมด":
+        dna_type = "🛡️ Capital Protector"
+
+    st.success(f"❤️ ยินดีที่ได้รู้จักนะ {name}")
+
+    st.header("🧬 Investment DNA Result")
+
+    st.markdown(f"""
+### Herby คิดว่าคุณมีลักษณะใกล้เคียงกับ
+
+# {dna_type}
+""")
+
+    st.markdown("""
+Herby มองว่าคุณมีแนวโน้มเป็นนักลงทุนที่
+ให้ความสำคัญกับเป้าหมายระยะยาว
+และพยายามตัดสินใจตามแนวทางที่สอดคล้องกับตัวเอง
+
+แน่นอนว่าผลลัพธ์นี้เป็นเพียงจุดเริ่มต้น
+
+Herby จะเรียนรู้เกี่ยวกับคุณมากขึ้น
+เมื่อเราเดินทางต่อไปด้วยกัน ❤️
+""")
+
+    st.divider()
+
+    st.subheader("✅ จุดแข็งที่ Herby เห็น")
+
+    st.markdown("""
+✅ มีเป้าหมายการลงทุนที่ชัดเจน
+
+✅ เริ่มเข้าใจระดับความเสี่ยงของตนเอง
+
+✅ กล้าที่จะวางแผนเพื่ออนาคต
+""")
+
+    st.divider()
+
+    st.subheader("💡 สิ่งที่ Herby อยากชวนคิด")
+
+    st.markdown("""
+💡 อย่าปล่อยให้ความรู้สึกระยะสั้น
+ทำให้คุณหลุดจากเป้าหมายระยะยาว
+
+💡 ทบทวนเป้าหมายของตัวเองอย่างน้อยปีละ 1 ครั้ง
+
+💡 ความสำเร็จในการลงทุน
+ไม่ได้วัดจากผลตอบแทนเพียงอย่างเดียว
+แต่วัดจากการเดินทางที่สอดคล้องกับชีวิตของคุณ
+""")
+
+    st.divider()
+
+    if st.button("➡️ ไปตั้งค่าพอร์ตของฉัน", key="portfolio_button"):
+
+        st.info("""
+🚧 Portfolio Setup
+
+ในขั้นตอนถัดไป Herby จะช่วยคุณ
+
+✅ เพิ่มสินทรัพย์ที่ถืออยู่
+
+✅ วิเคราะห์ความสอดคล้องกับเป้าหมาย
+
+✅ เริ่มคำนวณ Goal Alignment Score
+
+Coming Soon 🚀
+""")
+
