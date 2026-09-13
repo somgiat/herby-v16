@@ -268,9 +268,9 @@ for item in observations:
     st.info(item)
 
 
-            if st.button("➡️ ไปตั้งค่าพอร์ตของฉัน"):
+if st.button("➡️ ไปตั้งค่าพอร์ตของฉัน"):
 
-                st.info("""
+    st.info("""
 "🚧" Portfolio Setup Coming Soon
 
 Herby จะช่วยคุณ
@@ -282,5 +282,4 @@ Herby จะช่วยคุณ
 "✅" คำนวณ Goal Alignment
 
 "✅" ติดตามการเดินทางของคุณ
-"""
-)
+""")
