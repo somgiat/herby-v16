@@ -118,8 +118,3 @@ else:
             ✅ Investment DNA Result
             """)
 
-
-st.write("")
-
-if st.button("🚀 เริ่มต้นกับ Herby"):
-    st.success("ยินดีต้อนรับ 😊")
