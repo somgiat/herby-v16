@@ -152,7 +152,7 @@ Herby อยากเข้าใจเป้าหมาย
 
         st.divider()
 
-        if st.button("➡️ วิเคราะห์ Investment DNA", key="dna_button"):
+    if st.button("➡️ วิเคราะห์ Investment DNA", key="dna_button"):
 
     st.balloons()
 
