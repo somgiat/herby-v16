@@ -6,16 +6,16 @@ st.set_page_config(
     layout="centered"
 )
 
-# ----------------------
+# =========================
 # Session State
-# ----------------------
+# =========================
 
 if "started" not in st.session_state:
     st.session_state.started = False
 
-# ----------------------
+# =========================
 # Landing Page
-# ----------------------
+# =========================
 
 if not st.session_state.started:
 
@@ -48,12 +48,11 @@ if not st.session_state.started:
     if st.button("🚀 เริ่มต้นกับ Herby"):
 
         st.session_state.started = True
-
         st.rerun()
 
-# ----------------------
+# =========================
 # DNA Assessment
-# ----------------------
+# =========================
 
 else:
 
@@ -71,9 +70,7 @@ Herby อยากรู้จักคุณสักนิด 😊
 
     if name:
 
-        st.success(
-            f"❤️ ยินดีที่ได้รู้จักนะ {name}"
-        )
+        st.success(f"❤️ ยินดีที่ได้รู้จักนะ {name}")
 
         age = st.selectbox(
             "คุณอยู่ในช่วงอายุใด?",
@@ -139,6 +136,8 @@ Herby อยากรู้จักคุณสักนิด 😊
 
         if st.button("➡️ วิเคราะห์ Investment DNA"):
 
+            # DNA Type
+
             if drawdown == "ทยอยซื้อเพิ่ม" and volatility >= 7:
                 dna_type = "🚀 Growth Hunter"
 
@@ -155,11 +154,8 @@ Herby อยากรู้จักคุณสักนิด 😊
 
             st.header("🧬 Investment DNA Result")
 
-st.markdown(f"""
+            st.markdown(f"""
 ## {dna_type}
-
-Herby มองว่าคุณเป็นนักลงทุนที่มีแนวโน้ม
-สอดคล้องกับเป้าหมายและวิธีการลงทุนของตนเอง
 
 ผลลัพธ์นี้เป็นเพียงจุดเริ่มต้น
 
@@ -167,21 +163,21 @@ Herby จะเรียนรู้เกี่ยวกับคุณมา�
 เมื่อเราเดินทางต่อไปด้วยกัน ❤️
 """)
 
-# ------------------
-# What Herby Noticed
-# ------------------
+            # =========================
+            # What Herby Noticed
+            # =========================
 
-st.divider()
+            st.divider()
 
-st.subheader("👀 What Herby Noticed")
+            st.subheader("👀 What Herby Noticed")
 
-observations = []
+            observations = []
 
-# Goal vs Timeline
+            # Goal vs Timeline
 
-if goal == "เกษียณ" and timeline in ["น้อยกว่า 3 ปี", "3-5 ปี"]:
+            if goal == "เกษียณ" and timeline in ["น้อยกว่า 3 ปี", "3-5 ปี"]:
 
-    observations.append("""
+                observations.append("""
 🎯 Herby สังเกตว่า
 
 คุณเลือกเป้าหมาย "เกษียณ"
@@ -193,11 +189,11 @@ Herby อยากชวนให้ทบทวนอีกครั้งว�
 เงินก้อนนี้เป็นเงินเพื่อเกษียณจริงหรือไม่
 """)
 
-# Risk mismatch
+            # Risk mismatch
 
-if drawdown == "ขายทั้งหมด" and volatility >= 7:
+            if drawdown == "ขายทั้งหมด" and volatility >= 7:
 
-    observations.append("""
+                observations.append("""
 ⚠️ Herby สังเกตว่า
 
 คุณระบุว่าสามารถรับความผันผวนได้สูง
@@ -206,14 +202,14 @@ if drawdown == "ขายทั้งหมด" and volatility >= 7:
 
 สิ่งนี้อาจสะท้อนว่า
 ความเสี่ยงที่ยอมรับได้จริง
-ต่ำกว่าที่คาดไว้
+อาจต่ำกว่าที่คาดไว้
 """)
 
-# Growth mindset
+            # Growth mindset
 
-if drawdown == "ทยอยซื้อเพิ่ม" and volatility >= 7:
+            if drawdown == "ทยอยซื้อเพิ่ม" and volatility >= 7:
 
-    observations.append("""
+                observations.append("""
 🚀 Herby สังเกตว่า
 
 คุณมีแนวโน้มมองความผันผวน
@@ -223,11 +219,11 @@ if drawdown == "ทยอยซื้อเพิ่ม" and volatility >= 7:
 ที่เน้นการเติบโต
 """)
 
-# New investor
+            # New investor
 
-if experience == "ยังไม่เคยลงทุน":
+            if experience == "ยังไม่เคยลงทุน":
 
-    observations.append("""
+                observations.append("""
 🌱 Herby สังเกตว่า
 
 คุณกำลังอยู่ในช่วงเริ่มต้นของการเดินทาง
@@ -238,11 +234,11 @@ if experience == "ยังไม่เคยลงทุน":
 สำคัญกว่าการหาหุ้นที่ดีที่สุด
 """)
 
-# No observation found
+            # No observation
 
-if len(observations) == 0:
+            if len(observations) == 0:
 
-    observations.append("""
+                observations.append("""
 ✅ Herby สังเกตว่า
 
 คำตอบของคุณส่วนใหญ่
@@ -254,14 +250,14 @@ if len(observations) == 0:
 มักนำไปสู่การตัดสินใจที่มั่นคงกว่า
 """)
 
-for item in observations:
+            for item in observations:
+                st.info(item)
 
-    st.info(item)
+            st.divider()
 
+            if st.button("➡️ ไปตั้งค่าพอร์ตของฉัน"):
 
-if st.button("➡️ ไปตั้งค่าพอร์ตของฉัน"):
-
-    st.info("""
+                st.info("""
 🚧 Portfolio Setup Coming Soon
 
 Herby จะช่วยคุณ
@@ -274,3 +270,4 @@ Herby จะช่วยคุณ
 
 ✅ ติดตามการเดินทางของคุณ
 """)
+
