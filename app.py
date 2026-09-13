@@ -1,4 +1,5 @@
-import streamlit as st      st.successnfig(
+import streamlit as st      
+st.successnfig(
     page_title="Herby",
     page_icon="❤️",
     layout="wide"
