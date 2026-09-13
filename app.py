@@ -160,17 +160,17 @@ Herby อยากเข้าใจเป้าหมาย
 
         dna_type = "Balanced Investor"
 
-        if drawdown == "ทยอยซื้อเพิ่ม" and volatility >= 7:
-            dna_type = "🚀 Growth Hunter"
+    if drawdown == "ทยอยซื้อเพิ่ม" and volatility >= 7:
+        dna_type = "🚀 Growth Hunter"
 
-        elif drawdown == "ถือไว้" and volatility >= 5:
-            dna_type = "📈 Long-Term Builder"
+    elif drawdown == "ถือไว้" and volatility >= 5:
+        dna_type = "📈 Long-Term Builder"
 
-        elif drawdown == "ขายบางส่วน":
-            dna_type = "⚖️ Balanced Investor"
+    elif drawdown == "ขายบางส่วน":
+        dna_type = "⚖️ Balanced Investor"
 
-        elif drawdown == "ขายทั้งหมด":
-            dna_type = "🛡️ Capital Protector"
+    elif drawdown == "ขายทั้งหมด":
+        dna_type = "🛡️ Capital Protector"
 
     st.success(f"❤️ ยินดีที่ได้รู้จักนะ {name}")
 
