@@ -180,8 +180,7 @@ observations = []
 
 if goal == "เกษียณ" and timeline in ["น้อยกว่า 3 ปี", "3-5 ปี"]:
 
-    observations.append(
-        """
+    observations.append("""
 🎯 Herby สังเกตว่า
 
 คุณเลือกเป้าหมาย "เกษียณ"
@@ -191,15 +190,13 @@ if goal == "เกษียณ" and timeline in ["น้อยกว่า 3 ป
 Herby อยากชวนให้ทบทวนอีกครั้งว่า
 
 เงินก้อนนี้เป็นเงินเพื่อเกษียณจริงหรือไม่
-"""
-    )
+""")
 
 # Risk mismatch
 
 if drawdown == "ขายทั้งหมด" and volatility >= 7:
 
-    observations.append(
-        """
+    observations.append("""
 ⚠️ Herby สังเกตว่า
 
 คุณระบุว่าสามารถรับความผันผวนได้สูง
@@ -209,15 +206,13 @@ if drawdown == "ขายทั้งหมด" and volatility >= 7:
 สิ่งนี้อาจสะท้อนว่า
 ความเสี่ยงที่ยอมรับได้จริง
 ต่ำกว่าที่คาดไว้
-"""
-    )
+""")
 
 # Growth mindset
 
 if drawdown == "ทยอยซื้อเพิ่ม" and volatility >= 7:
 
-    observations.append(
-        """
+    observations.append("""
 🚀 Herby สังเกตว่า
 
 คุณมีแนวโน้มมองความผันผวน
@@ -225,15 +220,13 @@ if drawdown == "ทยอยซื้อเพิ่ม" and volatility >= 7:
 
 พฤติกรรมนี้พบได้บ่อยในนักลงทุนระยะยาว
 ที่เน้นการเติบโต
-"""
-    )
+""")
 
 # New investor
 
 if experience == "ยังไม่เคยลงทุน":
 
-    observations.append(
-        """
+    observations.append("""
 🌱 Herby สังเกตว่า
 
 คุณกำลังอยู่ในช่วงเริ่มต้นของการเดินทาง
@@ -242,15 +235,13 @@ if experience == "ยังไม่เคยลงทุน":
 
 การเรียนรู้และสร้างวินัย
 สำคัญกว่าการหาหุ้นที่ดีที่สุด
-"""
-    )
+""")
 
 # No observation found
 
 if len(observations) == 0:
 
-    observations.append(
-        """
+    observations.append("""
 ✅ Herby สังเกตว่า
 
 คำตอบของคุณส่วนใหญ่
@@ -260,8 +251,7 @@ if len(observations) == 0:
 
 เพราะการลงทุนที่มีเป้าหมายชัดเจน
 มักนำไปสู่การตัดสินใจที่มั่นคงกว่า
-"""
-    )
+""")
 
 for item in observations:
 
