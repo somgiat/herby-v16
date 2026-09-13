@@ -117,8 +117,7 @@ else:
 
             ✅ Investment DNA Result
             """)
-✅ เห็นพัฒนาการของตัวเอง
-""")
+
 
 st.write("")
 
