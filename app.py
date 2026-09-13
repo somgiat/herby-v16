@@ -155,7 +155,7 @@ Herby อยากรู้จักคุณสักนิด 😊
 
             st.header("🧬 Investment DNA Result")
 
-           st.markdown("""
+st.markdown(f"""
 ## {dna_type}
 
 Herby มองว่าคุณเป็นนักลงทุนที่มีแนวโน้ม
