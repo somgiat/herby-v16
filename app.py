@@ -158,7 +158,7 @@ Herby อยากเข้าใจเป้าหมาย
 
     # ประเมิน DNA แบบง่าย V1
 
-        dna_type = "Balanced Investor"
+    dna_type = "Balanced Investor"
 
     if drawdown == "ทยอยซื้อเพิ่ม" and volatility >= 7:
         dna_type = "🚀 Growth Hunter"
