@@ -182,7 +182,7 @@ if goal == "เกษียณ" and timeline in ["น้อยกว่า 3 ป
 
     observations.append(
         """
-🎯 Herby สังเกตว่า
+"🎯" Herby สังเกตว่า
 
 คุณเลือกเป้าหมาย "เกษียณ"
 
@@ -200,7 +200,7 @@ if drawdown == "ขายทั้งหมด" and volatility >= 7:
 
     observations.append(
         """
-⚠️ Herby สังเกตว่า
+"⚠️" Herby สังเกตว่า
 
 คุณระบุว่าสามารถรับความผันผวนได้สูง
 
@@ -218,7 +218,7 @@ if drawdown == "ทยอยซื้อเพิ่ม" and volatility >= 7:
 
     observations.append(
         """
-🚀 Herby สังเกตว่า
+"🚀" Herby สังเกตว่า
 
 คุณมีแนวโน้มมองความผันผวน
 เป็นโอกาสมากกว่าความน่ากลัว
@@ -234,7 +234,7 @@ if experience == "ยังไม่เคยลงทุน":
 
     observations.append(
         """
-🌱 Herby สังเกตว่า
+"🌱" Herby สังเกตว่า
 
 คุณกำลังอยู่ในช่วงเริ่มต้นของการเดินทาง
 
@@ -251,7 +251,7 @@ if len(observations) == 0:
 
     observations.append(
         """
-✅ Herby สังเกตว่า
+"✅" Herby สังเกตว่า
 
 คำตอบของคุณส่วนใหญ่
 สอดคล้องกันในทิศทางเดียวกัน
