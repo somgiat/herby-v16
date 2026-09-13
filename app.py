@@ -1,5 +1,9 @@
-import streamlit as st              st.success  page_title="Herby",
-    page_iconst.success layout="centered"
+import streamlit as st              
+
+st.set_page_config(
+    page_title="Herby",
+    page_icon="❤️"
+    layout="centered"
 )
 
 # --------------------
