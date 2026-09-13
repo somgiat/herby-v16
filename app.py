@@ -271,15 +271,15 @@ for item in observations:
             if st.button("➡️ ไปตั้งค่าพอร์ตของฉัน"):
 
                 st.info("""
-🚧 Portfolio Setup Coming Soon
+"🚧" Portfolio Setup Coming Soon
 
 Herby จะช่วยคุณ
 
-✅ เพิ่มสินทรัพย์
+"✅" เพิ่มสินทรัพย์
 
-✅ วิเคราะห์พอร์ต
+"✅" วิเคราะห์พอร์ต
 
-✅ คำนวณ Goal Alignment
+"✅" คำนวณ Goal Alignment
 
-✅ ติดตามการเดินทางของคุณ
+"✅" ติดตามการเดินทางของคุณ
 """)
