@@ -1,8 +1,8 @@
-import streamlit as st              
+import streamlit as st
 
 st.set_page_config(
     page_title="Herby",
-    page_icon="❤️"
+    page_icon="❤️",
     layout="centered"
 )
 
@@ -154,5 +154,35 @@ Herby อยากเข้าใจเป้าหมาย
 
         if st.button("➡️ วิเคราะห์ Investment DNA", key="dna_button"):
 
-            st.success("🎉 Herby ได้ทำ
+            st.success("🎉 Herby ได้ทำความรู้จักคุณเบื้องต้นแล้ว")
+
+            st.info(f"""
+ชื่อ : {name}
+
+ช่วงอายุ : {age}
+
+เป้าหมายหลัก : {goal}
+
+ระยะเวลาการใช้เงิน : {timeline}
+
+ประสบการณ์ลงทุน : {experience}
+
+พฤติกรรมเมื่อพอร์ตติดลบ : {drawdown}
+
+ระดับการยอมรับความผันผวน : {volatility}/10
+""")
+
+            st.warning("""
+🚧 Investment DNA Result
+
+เวอร์ชันถัดไป Herby จะเริ่มวิเคราะห์ว่า
+
+✅ คุณเป็นนักลงทุนแบบใด
+
+✅ เป้าหมายและพอร์ตสอดคล้องกันหรือไม่
+
+✅ ความเสี่ยงเหมาะกับคุณหรือไม่
+
+✅ Goal Alignment Score
+""")
 
