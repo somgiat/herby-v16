@@ -1,6 +1,6 @@
 import streamlit as st      
 
-st.successnfig(
+st.set_page_config(
     
     page_title="Herby",
     
