@@ -154,11 +154,11 @@ Herby อยากเข้าใจเป้าหมาย
 
     if st.button("➡️ วิเคราะห์ Investment DNA", key="dna_button"):
 
-    st.balloons()
+        st.balloons()
 
     # ประเมิน DNA แบบง่าย V1
 
-    dna_type = "Balanced Investor"
+        dna_type = "Balanced Investor"
 
     if drawdown == "ทยอยซื้อเพิ่ม" and volatility >= 7:
         dna_type = "🚀 Growth Hunter"
