@@ -72,8 +72,10 @@ if 'started' not in st.session_state:
 if not st.session_state.started:
     st.title('❤️ Herby')
     st.subheader('Your Digital Financial Mentor')
-    st.markdown('### เราไม่ได้ช่วยคุณเลือกสินทรัพย์
-### เราช่วยให้คุณเข้าใจตัวเองมากขึ้น')
+    st.markdown("""
+    ### เราไม่ได้ช่วยคุณเลือกสินทรัพย์
+    ### เราช่วยให้คุณเข้าใจตัวเองมากขึ้น
+    """)
 
     if st.button('🚀 เริ่มต้นกับ Herby'):
         st.session_state.started = True
