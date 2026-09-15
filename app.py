@@ -86,6 +86,8 @@ FEELING_OPTIONS = [
 
 def initialize_session_state():
     defaults = {
+        "show_about": False,
+        "show_dashboard": False,
         "started": False,
         "show_results": False,
         "confirmed": False,
