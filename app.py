@@ -637,6 +637,11 @@ def render_welcome_screen():
 
 
 def render_questionnaire():
+
+    if st.button("⬅️ กลับหน้าแรก"):
+        st.session_state.started = False
+        st.rerun()
+    
     st.title("👋 ยินดีต้อนรับ")
 
     with st.form("mindset_questionnaire"):
