@@ -672,7 +672,7 @@ def render_questionnaire():
             key="q_experience",
         )
 
-                assets = st.multiselect(
+        assets = st.multiselect(
             "คุณสนใจสินทรัพย์ประเภทใดเป็นพิเศษ?",
             ASSET_OPTIONS,
             key="q_assets",
