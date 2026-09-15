@@ -672,7 +672,7 @@ def render_questionnaire():
             key="q_experience",
         )
 
-        assets = st.multiselect(
+                assets = st.multiselect(
             "คุณสนใจสินทรัพย์ประเภทใดเป็นพิเศษ?",
             ASSET_OPTIONS,
             key="q_assets",
@@ -682,7 +682,7 @@ def render_questionnaire():
         feeling = st.radio(
             """หากคุณลงทุนในหุ้น 1,000,000 บาท
 และวันถัดมามูลค่าพอร์ตของคุณเหลือ 700,000 บาท
-คุณคิดว่าตัวเองจะทำอย่างไร?"""
+คุณคิดว่าตัวเองจะทำอย่างไร?""", # <-- เติมคอมม่าตรงนี้ครับ
             FEELING_OPTIONS,
             key="q_feeling",
         )
