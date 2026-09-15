@@ -1,11 +1,15 @@
-# HERBY V0.8 - MINDSET ENGINE
+# HERBY V0.9 PRODUCTION - V0.8 MINDSET ENGINE + PROFILE LAYER
 # Streamlit application - full file for copy/paste
 
 import streamlit as st
+import json
+import os
+import hashlib
+from datetime import datetime
 
 st.set_page_config(
-    page_title="Herby V0.8",
-    page_icon="❤️",
+    page_title="Herby V0.9",
+    page_icon="💚",
     layout="centered",
 )
 
@@ -86,8 +90,6 @@ FEELING_OPTIONS = [
 
 def initialize_session_state():
     defaults = {
-        "show_about": False,
-        "show_dashboard": False,
         "started": False,
         "show_results": False,
         "confirmed": False,
@@ -264,7 +266,7 @@ def detect_mindset_relationships(answers, mindsets, asset_profile):
         add_relationship(
             relationships,
             "risk_behavior_tension_low_active",
-            f"คุณระบุว่ารับความผันผวนได้ {answers['volatility']} จาก 10 แต่คาดว่าจะรับมือเชิงรุกเมื่อมูลค่าลดลง 30%",
+            f"คุณระบุว่ารับความผันผวนได้ {answers['volatility']} จาก 10 แต่คาดว่าจะรับมือเชิงรุกเมื่อเงินลงทุน 1,000,000 บาท เหลือ 700,000 บาท",
             "คุณอาจเข้าใจแนวคิดการถือผ่านความผันผวนหรือ Buy the Dip แต่ยังไม่แน่ใจว่าความรู้สึกในสถานการณ์จริงจะตรงกับสิ่งที่คาดไว้หรือไม่",
             3,
         )
@@ -273,7 +275,7 @@ def detect_mindset_relationships(answers, mindsets, asset_profile):
         add_relationship(
             relationships,
             "risk_behavior_tension_high_defensive",
-            f"คุณระบุว่ารับความผันผวนได้ {answers['volatility']} จาก 10 แต่คาดว่าจะลดความเสี่ยงอย่างรวดเร็วเมื่อมูลค่าลดลง 30%",
+            f"คุณระบุว่ารับความผันผวนได้ {answers['volatility']} จาก 10 แต่คาดว่าจะลดความเสี่ยงอย่างรวดเร็วเมื่อเงินลงทุน 1,000,000 บาท เหลือ 700,000 บาท",
             "ความเสี่ยงที่คุณเชื่อว่ารับได้กับพฤติกรรมภายใต้แรงกดดันอาจยังไม่ตรงกัน",
             3,
         )
@@ -421,7 +423,7 @@ def build_human_interpretation(answers, mindsets, asset_profile, relationships):
 
     if "risk_behavior_tension_low_active" in codes:
         paragraphs.append(
-            "อย่างไรก็ตาม คุณระบุว่ารับความผันผวนได้น้อย แต่กลับมองการลดลง 30% ว่าอาจเป็นโอกาสซื้อเพิ่ม "
+            "อย่างไรก็ตาม คุณระบุว่ารับความผันผวนได้น้อย แต่กลับมองการลดลงจาก 1,000,000 บาท เหลือ 700,000 บาท ว่าอาจเป็นโอกาสซื้อเพิ่ม "
             "คำตอบนี้อาจสะท้อนว่าคุณเข้าใจแนวคิด Buy the Dip หรือเชื่อในการฟื้นตัวระยะยาว "
             "แต่ยังไม่แน่ใจว่าความรู้สึกจริงเมื่อเห็นมูลค่าลดลงจะตรงกับสิ่งที่คาดไว้หรือไม่"
         )
@@ -622,184 +624,333 @@ def analyze_answers(answers):
 # ============================================================
 # USER INTERFACE
 # ============================================================
+# ============================================================
+# V0.9 PROFILE STORAGE
+# ============================================================
+PROFILE_DB = os.getenv("HERBY_PROFILE_DB", "herby_profiles.json")
 
-def render_welcome_screen():
-    st.title("❤️ Herby")
+def normalize_nickname(value):
+    return " ".join(value.strip().split())
+
+def nickname_key(value):
+    return normalize_nickname(value).casefold()
+
+def hash_pin(pin):
+    return hashlib.sha256(pin.encode("utf-8")).hexdigest()
+
+def load_profiles():
+    if not os.path.exists(PROFILE_DB):
+        return {}
+    try:
+        with open(PROFILE_DB, "r", encoding="utf-8") as file:
+            data = json.load(file)
+        return data if isinstance(data, dict) else {}
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+def save_profiles(profiles):
+    temporary = f"{PROFILE_DB}.tmp"
+    with open(temporary, "w", encoding="utf-8") as file:
+        json.dump(profiles, file, ensure_ascii=False, indent=2)
+    os.replace(temporary, PROFILE_DB)
+
+def get_current_profile():
+    user_key = st.session_state.current_user_key
+    return load_profiles().get(user_key) if user_key else None
+
+def save_assessment(result):
+    profiles = load_profiles()
+    user_key = st.session_state.current_user_key
+    if not user_key or user_key not in profiles:
+        return False
+    record = {
+        "assessed_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+        "result": result,
+    }
+    history = profiles[user_key].setdefault("assessment_history", [])
+    history.append(record)
+    profiles[user_key]["latest_assessment"] = record
+    save_profiles(profiles)
+    return True
+
+# ============================================================
+# SESSION AND NAVIGATION
+# ============================================================
+def initialize_session_state():
+    defaults = {
+        "page": "home",
+        "current_user_key": None,
+        "analysis_result": None,
+        "show_results": False,
+        "confirmed": False,
+    }
+    for key, value in defaults.items():
+        if key not in st.session_state:
+            st.session_state[key] = value
+
+def go_to(page):
+    st.session_state.page = page
+    st.rerun()
+
+def clear_results():
+    st.session_state.show_results = False
+    st.session_state.confirmed = False
+    st.session_state.analysis_result = None
+
+def logout():
+    for key in list(st.session_state.keys()):
+        del st.session_state[key]
+    st.rerun()
+
+def render_back_button(destination="home"):
+    if st.button("⬅️ ย้อนกลับ"):
+        go_to(destination)
+
+# ============================================================
+# USER INTERFACE
+# ============================================================
+def apply_green_theme():
+    st.markdown("""
+    <style>
+    :root { --herby-green: #168a46; }
+    .stButton > button[kind="primary"], .stFormSubmitButton > button {
+        background-color: var(--herby-green); border-color: var(--herby-green);
+    }
+    .herby-card { padding: 1rem; border-radius: 14px; background: #effaf3; border: 1px solid #bde5ca; }
+    </style>
+    """, unsafe_allow_html=True)
+
+def render_home():
+    st.title("💚 Herby")
     st.subheader("Your Digital Financial Mentor")
-    st.markdown(
-        """
-### เราไม่ได้ช่วยคุณเลือกสินทรัพย์
-### เราช่วยให้คุณเข้าใจตัวเองมากขึ้น
-        """
-    )
+    st.markdown("### เราไม่ได้ช่วยคุณเลือกสินทรัพย์\n### เราช่วยให้คุณเข้าใจตัวเองมากขึ้น")
+    st.write("ก่อนถามว่า ‘ควรลงทุนอะไร?’ Herby อยากเข้าใจก่อนว่า คนที่จะลงทุนคือใคร")
+    if st.button("💚 ฉันเป็นผู้ใช้ใหม่", type="primary", use_container_width=True):
+        go_to("register")
+    if st.button("💚 ฉันเคยทำแบบประเมินแล้ว", use_container_width=True):
+        go_to("login")
 
-    if st.button("🚀 เริ่มต้นกับ Herby", type="primary", use_container_width=True):
-        st.session_state.started = True
-        st.rerun()
+def render_register():
+    render_back_button("home")
+    st.title("💚 สร้างโปรไฟล์ Herby")
+    with st.form("register_form"):
+        nickname = st.text_input("Nickname", max_chars=40)
+        pin = st.text_input("PIN ตัวเลข 4 หลัก", type="password", max_chars=4)
+        submitted = st.form_submit_button("💚 ตรวจสอบและสร้างโปรไฟล์", use_container_width=True)
+    if submitted:
+        nickname = normalize_nickname(nickname)
+        key = nickname_key(nickname)
+        profiles = load_profiles()
+        if not nickname:
+            st.error("กรุณาใส่ Nickname")
+        elif len(pin) != 4 or not pin.isdigit():
+            st.error("PIN ต้องเป็นตัวเลข 4 หลัก")
+        elif key in profiles:
+            st.error("❌ ชื่อนี้ถูกใช้งานแล้ว กรุณาตั้งชื่อใหม่")
+        else:
+            profiles[key] = {
+                "nickname": nickname,
+                "pin_hash": hash_pin(pin),
+                "created_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+                "assessment_history": [],
+            }
+            save_profiles(profiles)
+            st.session_state.current_user_key = key
+            clear_results()
+            go_to("questionnaire")
 
+def render_login():
+    render_back_button("home")
+    st.title("💚 ยินดีต้อนรับกลับ")
+    with st.form("login_form"):
+        nickname = st.text_input("Nickname")
+        pin = st.text_input("PIN ตัวเลข 4 หลัก", type="password", max_chars=4)
+        submitted = st.form_submit_button("💚 ให้ Herby จำฉัน", use_container_width=True)
+    if submitted:
+        key = nickname_key(nickname)
+        profile = load_profiles().get(key)
+        if profile and profile.get("pin_hash") == hash_pin(pin):
+            st.session_state.current_user_key = key
+            latest = profile.get("latest_assessment")
+            st.session_state.analysis_result = latest.get("result") if latest else None
+            clear_results()
+            go_to("dashboard")
+        else:
+            st.error("ไม่พบ Nickname หรือ PIN ไม่ถูกต้อง")
 
 def render_questionnaire():
-
-    if st.button("⬅️ กลับหน้าแรก"):
-        st.session_state.started = False
-        st.rerun()
-    
+    profile = get_current_profile()
+    if not profile:
+        go_to("home")
+    render_back_button("dashboard" if profile.get("latest_assessment") else "home")
+    nickname = profile["nickname"]
     st.title("👋 ยินดีต้อนรับ")
-
+    st.success(f"สวัสดี {nickname} 👋 ยินดีต้อนรับสู่ Herby")
     with st.form("mindset_questionnaire"):
-        name = st.text_input(
-            "คุณอยากให้ Herby เรียกคุณว่าอะไร?",
-            key="q_name",
-        )
-
-        if name.strip():
-            st.success(f"สวัสดี {name.strip()} 👋 ยินดีต้อนรับสู่ Herby")
-
-        age = st.selectbox(
-            "คุณอยู่ในช่วงอายุใด?",
-            AGE_OPTIONS,
-            key="q_age",
-        )
-
-        goal = st.selectbox(
-            "เป้าหมายหลักในการลงทุนของคุณคืออะไร?",
-            GOAL_OPTIONS,
-            key="q_goal",
-        )
-
-        timeline = st.selectbox(
-            "คุณคาดว่าจะใช้เงินก้อนนี้เมื่อไร?",
-            TIMELINE_OPTIONS,
-            key="q_timeline",
-        )
-
-        experience = st.selectbox(
-            "คุณมีประสบการณ์การลงทุนมากแค่ไหน?",
-            EXPERIENCE_OPTIONS,
-            key="q_experience",
-        )
-
+        age = st.selectbox("คุณอยู่ในช่วงอายุใด?", AGE_OPTIONS, key="q_age")
+        goal = st.selectbox("เป้าหมายหลักในการลงทุนของคุณคืออะไร?", GOAL_OPTIONS, key="q_goal")
+        timeline = st.selectbox("คุณคาดว่าจะใช้เงินก้อนนี้เมื่อไร?", TIMELINE_OPTIONS, key="q_timeline")
+        experience = st.selectbox("คุณมีประสบการณ์การลงทุนมากแค่ไหน?", EXPERIENCE_OPTIONS, key="q_experience")
         assets = st.multiselect(
-            "คุณสนใจสินทรัพย์ประเภทใดเป็นพิเศษ?",
-            ASSET_OPTIONS,
-            key="q_assets",
+            "คุณสนใจสินทรัพย์ประเภทใดเป็นพิเศษ?", ASSET_OPTIONS, key="q_assets",
             help="เลือกได้มากกว่าหนึ่งประเภท หากยังไม่แน่ใจสามารถเลือก 'ยังไม่แน่ใจ' ได้",
         )
-
         feeling = st.radio(
-            """หากคุณลงทุนในหุ้น 1,000,000 บาท
-และวันถัดมามูลค่าพอร์ตของคุณเหลือ 700,000 บาท
-คุณคิดว่าตัวเองจะทำอย่างไร?""", # <-- เติมคอมม่าตรงนี้ครับ
-            FEELING_OPTIONS,
-            key="q_feeling",
+            "หากคุณซื้อหุ้นมูลค่า 1,000,000 บาท และเมื่อเปิดตลาดมามูลค่าเหลือ 700,000 บาท คุณคิดว่าตัวเองจะทำอย่างไร?",
+            FEELING_OPTIONS, key="q_feeling",
         )
-
-        volatility = st.slider(
-            "คุณยอมรับความผันผวนได้มากแค่ไหน?",
-            min_value=1,
-            max_value=10,
-            value=5,
-            key="q_volatility",
-        )
-
-        submitted = st.form_submit_button(
-            "🔍 วิเคราะห์สไตล์การลงทุน",
-            type="primary",
-            use_container_width=True,
-        )
-
+        volatility = st.slider("คุณยอมรับความผันผวนได้มากแค่ไหน?", 1, 10, 5, key="q_volatility")
+        submitted = st.form_submit_button("🔍 วิเคราะห์สไตล์การลงทุน", type="primary", use_container_width=True)
     if submitted:
-        if not name.strip():
-            st.error("กรุณาใส่ชื่อที่ต้องการให้ Herby เรียก")
-            clear_results()
-            return
-
         answers = {
-            "name": name.strip(),
-            "age": age,
-            "goal": goal,
-            "timeline": timeline,
-            "experience": experience,
-            "assets": assets,
-            "feeling": feeling,
+            "name": nickname, "age": age, "goal": goal, "timeline": timeline,
+            "experience": experience, "assets": assets, "feeling": feeling,
             "volatility": volatility,
         }
-
         st.session_state.analysis_result = analyze_answers(answers)
         st.session_state.show_results = True
         st.session_state.confirmed = False
         st.rerun()
-
+    if st.session_state.show_results and st.session_state.analysis_result:
+        render_results(st.session_state.analysis_result)
 
 def render_results(result):
     st.divider()
     st.caption(f"ผลสะท้อนสำหรับ {result['answers']['name']}")
-
     st.header("🔎 สิ่งที่ Herby สังเกตเห็น")
-    observations = result["observations"]
-
-    if observations:
-        for observation in observations:
+    if result["observations"]:
+        for observation in result["observations"]:
             st.warning(observation)
     else:
-        st.info(
-            "Herby ยังไม่พบแรงดึงสำคัญจากคำตอบชุดนี้ "
-            "แต่ผลลัพธ์ยังเป็นเพียงภาพสะท้อนจากข้อมูลที่คุณให้"
-        )
-
+        st.info("Herby ยังไม่พบแรงดึงสำคัญจากคำตอบชุดนี้ แต่ผลลัพธ์ยังเป็นเพียงภาพสะท้อนจากข้อมูลที่คุณให้")
     st.header("🌟 What Herby Learned About You")
     st.info(result["insight"])
-
     st.header("📈 สไตล์การลงทุนปัจจุบันของคุณ")
     st.subheader(result["style"]["name"])
     st.write(result["style"]["description"])
-
-    st.caption(
-        "ผลลัพธ์นี้เป็นภาพสะท้อนปัจจุบัน ไม่ใช่คำแนะนำให้ซื้อหรือขายสินทรัพย์ "
-        "และสไตล์การลงทุนสามารถเปลี่ยนแปลงได้ตามประสบการณ์และสถานการณ์ชีวิต"
-    )
-
+    st.caption("ผลลัพธ์นี้เป็นภาพสะท้อนปัจจุบัน ไม่ใช่คำแนะนำให้ซื้อหรือขายสินทรัพย์ และสไตล์สามารถเปลี่ยนแปลงได้")
     st.header("❓ Herby เข้าใจคุณถูกไหม?")
     col1, col2 = st.columns(2)
-
     with col1:
-        if st.button(
-            "🔄 ฉันว่ายังไม่ใช่ กลับไปแก้ไขคำตอบ",
-            use_container_width=True,
-        ):
+        if st.button("🔄 ฉันว่ายังไม่ใช่ กลับไปแก้ไขคำตอบ", use_container_width=True):
             st.session_state.show_results = False
             st.session_state.confirmed = False
             st.rerun()
-
     with col2:
-        if st.button(
-            "✅ ฉันคิดว่าใช่ ไปขั้นตอนต่อไปกันเลย",
-            type="primary",
-            use_container_width=True,
-        ):
-            st.session_state.confirmed = True
-            st.rerun()
+        if st.button("✅ ฉันคิดว่าใช่ ไปขั้นตอนต่อไปกันเลย", type="primary", use_container_width=True):
+            if save_assessment(result):
+                st.session_state.show_results = False
+                st.session_state.confirmed = True
+                go_to("about")
+            else:
+                st.error("ไม่สามารถบันทึกโปรไฟล์ได้ กรุณาเข้าสู่ระบบใหม่")
 
-    if st.session_state.confirmed:
-        st.success(
-            "Herby เริ่มเข้าใจสไตล์การลงทุนปัจจุบันของคุณแล้ว\n\n"
-            "การยืนยันนี้ไม่ได้ล็อกสไตล์ของคุณ เพราะมุมมองและพฤติกรรมการลงทุน "
-            "สามารถเปลี่ยนแปลงได้ตามประสบการณ์และสถานการณ์ชีวิต"
-        )
+def render_about():
+    render_back_button("dashboard")
+    st.title("❤️ ทำไม Herby ถึงถามคำถามเหล่านี้?")
+    st.markdown("""
+Herby ไม่ได้พยายามตัดสินคุณ และไม่ได้พยายามหาว่าคุณตอบถูกหรือผิด
 
+Herby กำลังพยายามเข้าใจว่า:
+- คุณต้องการอะไร
+- คุณกังวลอะไร
+- คุณให้ความสำคัญกับอะไร
+- คุณพร้อมรับอะไรจริง ๆ
+
+### 💚 ความเชื่อหลักของ Herby
+ก่อนถามว่า **ควรลงทุนอะไร?** ต้องถามก่อนว่า **คนที่จะลงทุนคือใคร?**
+
+### 🌱 จุดเริ่มต้นของ Herby
+Founder ของ Herby เคยเป็นนักลงทุนประเภท:
+
+ใครบอกว่าดี...ซื้อ 🤣  
+ใครบอกว่ากำลังมา...ซื้อ 🤣  
+ใครบอกว่าควรช้อน...ช้อน 🤣  
+ใครบอกว่าห้ามพลาด...ซื้อเพิ่ม 🤣
+
+Herby จึงเกิดขึ้นเพื่อช่วยให้เราเข้าใจตัวเอง ก่อนตัดสินใจเรื่องการลงทุน
+    """)
+    if st.button("💚 ไปที่ Dashboard", type="primary", use_container_width=True):
+        go_to("dashboard")
+
+def render_result_snapshot(result):
+    st.header("🔎 สิ่งที่ Herby สังเกตเห็น")
+    for observation in result.get("observations", []):
+        st.warning(observation)
+    st.header("🌟 What Herby Learned About You")
+    st.info(result.get("insight", ""))
+    st.header("📈 สไตล์การลงทุนปัจจุบันของคุณ")
+    st.subheader(result.get("style", {}).get("name", "-"))
+    st.write(result.get("style", {}).get("description", ""))
+
+def render_dashboard():
+    profile = get_current_profile()
+    if not profile:
+        go_to("home")
+    latest = profile.get("latest_assessment")
+    st.title("💚 Dashboard")
+    st.subheader(f"สวัสดี {profile['nickname']} 👋")
+    st.success("Herby จำคุณได้")
+    if latest:
+        result = latest["result"]
+        assessed = latest.get("assessed_at", "-").replace("T", " ")[:16]
+        st.markdown(f"**📅 ประเมินล่าสุด:** {assessed}")
+        st.markdown(f"**📈 สไตล์ล่าสุด:** {result['style']['name']}")
+        st.markdown(f"**🌱 Learning Stage:** {result['mindsets']['learning_stage']}")
+        if st.button("💚 ทบทวนโปรไฟล์ของฉัน", use_container_width=True):
+            st.session_state.review_result = result
+            go_to("review")
+        if st.button("💚 อัปเดตคำตอบใหม่", type="primary", use_container_width=True):
+            clear_results()
+            go_to("questionnaire")
+        if st.button("💚 ดูประวัติการประเมิน", use_container_width=True):
+            go_to("history")
+    else:
+        st.info("Herby จำโปรไฟล์ของคุณได้แล้ว แต่ยังไม่มีผลการประเมิน")
+        if st.button("💚 เริ่มประเมินครั้งแรก", type="primary", use_container_width=True):
+            go_to("questionnaire")
+    if st.button("❤️ เรื่องราวของ Herby", use_container_width=True):
+        go_to("about")
+    if st.button("ออกจากระบบ", use_container_width=True):
+        logout()
+
+def render_review():
+    render_back_button("dashboard")
+    result = st.session_state.get("review_result")
+    if not result:
+        profile = get_current_profile() or {}
+        latest = profile.get("latest_assessment")
+        result = latest.get("result") if latest else None
+    if not result:
+        st.info("ยังไม่มีผลการประเมิน")
+        return
+    st.title("💚 โปรไฟล์ของฉัน")
+    render_result_snapshot(result)
+
+def render_history():
+    render_back_button("dashboard")
+    profile = get_current_profile() or {}
+    history = profile.get("assessment_history", [])
+    st.title("📚 ประวัติการประเมิน")
+    if not history:
+        st.info("ยังไม่มีประวัติการประเมิน")
+        return
+    for number, record in enumerate(reversed(history), 1):
+        result = record.get("result", {})
+        when = record.get("assessed_at", "-").replace("T", " ")[:16]
+        style = result.get("style", {}).get("name", "-")
+        with st.expander(f"ครั้งที่ {len(history)-number+1} • {when} • {style}"):
+            render_result_snapshot(result)
 
 def main():
     initialize_session_state()
-
-    if not st.session_state.started:
-        render_welcome_screen()
-        return
-
-    render_questionnaire()
-
-    if st.session_state.show_results and st.session_state.analysis_result:
-        render_results(st.session_state.analysis_result)
-
+    apply_green_theme()
+    routes = {
+        "home": render_home, "register": render_register, "login": render_login,
+        "questionnaire": render_questionnaire, "about": render_about,
+        "dashboard": render_dashboard, "review": render_review, "history": render_history,
+    }
+    routes.get(st.session_state.page, render_home)()
 
 if __name__ == "__main__":
     main()
