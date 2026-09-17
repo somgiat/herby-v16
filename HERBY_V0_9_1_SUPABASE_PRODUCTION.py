@@ -1926,6 +1926,200 @@ def render_admin_user_detail():
             f"ไม่สามารถโหลดรายละเอียดผู้ใช้ได้: {error}"
         )
 
+def render_admin_analytics():
+
+    if not st.session_state.admin_logged_in:
+        go_to("admin_login")
+        return
+
+    st.title("🧠 HERBY MINDSET ANALYTICS")
+
+    if st.button("⬅️ กลับไป Admin Dashboard"):
+        go_to("admin_dashboard")
+
+    try:
+
+        analytics = get_admin_analytics()
+
+        st.caption(
+            "Mindset ใช้ผลประเมินล่าสุดของผู้ใช้แต่ละคน "
+            "ส่วน Feedback ใช้ข้อมูลจากทุก Assessment"
+        )
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            st.metric(
+                "👥 ผู้ใช้ที่มีผลประเมิน",
+                analytics["total_latest_users"],
+            )
+
+            st.metric(
+                "💬 Feedback ที่ได้รับ",
+                analytics["feedback_count"],
+            )
+
+        with col2:
+
+            st.metric(
+                "🧠 Understanding เฉลี่ย",
+                (
+                    f"{analytics['average_understanding']} / 5"
+                    if analytics["feedback_count"] > 0
+                    else "ยังไม่มีข้อมูล"
+                ),
+            )
+
+            st.metric(
+                "📨 Feedback Response Rate",
+                (
+                    f"{analytics['feedback_response_rate']}%"
+                ),
+            )
+
+        st.divider()
+
+        render_admin_bar_chart(
+            "📈 การกระจายของสไตล์การลงทุน",
+            analytics["style_counts"],
+            "สไตล์",
+        )
+
+        st.divider()
+
+        render_admin_bar_chart(
+            "🎯 ระดับการยอมรับความเสี่ยง",
+            analytics["risk_counts"],
+            "ระดับความเสี่ยง",
+        )
+
+        st.divider()
+
+        render_admin_bar_chart(
+            "⚡ พฤติกรรมเมื่อเผชิญความผันผวน",
+            analytics["behavior_counts"],
+            "พฤติกรรม",
+        )
+
+        st.divider()
+
+        render_admin_bar_chart(
+            "🌱 Learning Stage",
+            analytics["learning_counts"],
+            "Learning Stage",
+        )
+
+        st.divider()
+
+        render_admin_bar_chart(
+            "💚 ความตรงของผลลัพธ์จาก Feedback",
+            analytics["accuracy_counts"],
+            "ระดับความตรง",
+        )
+
+        st.divider()
+        st.subheader("🔍 Risk–Behavior Insight")
+
+        high_risk_users = analytics[
+            "high_risk_users"
+        ]
+
+        defensive_users = analytics[
+            "defensive_high_risk_users"
+        ]
+
+        gap_rate = analytics[
+            "risk_behavior_gap_rate"
+        ]
+
+        if high_risk_users == 0:
+
+            st.info(
+                "ยังไม่มีผู้ใช้ที่ถูกจัดอยู่ในระดับ "
+                "Risk Tolerance: High"
+            )
+
+        elif defensive_users == 0:
+
+            st.success(
+                "ยังไม่พบ Risk–Behavior Gap "
+                "ในกลุ่มผู้ใช้ที่รับความเสี่ยงระดับสูง"
+            )
+
+            st.caption(
+                f"วิเคราะห์จากผู้ใช้ Risk Tolerance: "
+                f"High จำนวน {high_risk_users} คน"
+            )
+
+        else:
+
+            st.warning(
+                f"พบผู้ใช้ {defensive_users} จาก "
+                f"{high_risk_users} คน ที่ระบุว่า "
+                f"รับความเสี่ยงได้สูง แต่มีแนวโน้ม "
+                f"ขายทั้งหมดหรือขายบางส่วนเมื่อขาดทุน"
+            )
+
+            st.metric(
+                "⚠️ Risk–Behavior Gap",
+                f"{gap_rate}%",
+            )
+
+        st.divider()
+        st.subheader("💬 ความคิดเห็นล่าสุดจากผู้ใช้")
+
+        comments = analytics[
+            "feedback_comments"
+        ]
+
+        if not comments:
+
+            st.info(
+                "ยังไม่มีความคิดเห็นเพิ่มเติมจากผู้ใช้"
+            )
+
+        else:
+
+            for feedback in comments[:10]:
+
+                assessment_date = feedback.get(
+                    "assessment_date",
+                    "-",
+                )
+
+                if assessment_date != "-":
+
+                    assessment_date_display = (
+                        assessment_date
+                        .replace("T", " ")
+                        [:16]
+                    )
+
+                else:
+
+                    assessment_date_display = "-"
+
+                with st.container(border=True):
+
+                    st.write(
+                        f"💬 {feedback['comment']}"
+                    )
+
+                    st.caption(
+                        f"{feedback['accuracy']} • "
+                        f"Understanding: "
+                        f"{feedback['understanding'] or '-'} / 5 • "
+                        f"{assessment_date_display}"
+                    )
+
+    except Exception as error:
+
+        st.error(
+            f"ไม่สามารถโหลด Mindset Analytics ได้: "
+            f"{error}"
+        )
+
 
 def main():
     initialize_session_state()
