@@ -1523,7 +1523,12 @@ def render_admin_dashboard():
             use_container_width=True,
         ):
             go_to("admin_users")
-
+        if st.button(
+            "🧠 เปิด Mindset Analytics",
+            use_container_width=True,
+        ):
+            go_to("admin_analytics")
+            
 
 def render_admin_users():
 
