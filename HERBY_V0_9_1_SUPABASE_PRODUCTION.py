@@ -1269,6 +1269,13 @@ def render_admin_dashboard():
             "🧠 Understanding",
             stats["average_understanding"]
         )
+            st.divider()
+            if st.button(
+                "👥 เปิด User Explorer",
+                type="primary",
+                use_container_width=True,
+            ):
+                go_to(admin_users")
 
 def render_admin_users():
 
