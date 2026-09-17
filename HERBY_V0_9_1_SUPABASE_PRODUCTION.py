@@ -1075,18 +1075,20 @@ def render_history():
 def render_admin_login():
     render_back_button("home")
     st.title("🔐 Admin Login")
+    
+    # ใช้ช่องใส่ password ตัวนี้ตัวเดียวพอครับ
     password = st.text_input(
         "Admin Password",
         type="password"
     )
-password = st.text_input("Enter Admin Password", type="password")
-if st.button("Login"):
-    if password == "herbyadmin":
-        st.session_state.admin_logged_in = True
-        go_to("admin_dashboard")
-    else:
-        st.error("Invalid Password")
-
+    
+    # ขยับปุ่มกดและเงื่อนไขทั้งหมดเข้ามาอยู่ในฟังก์ชันด้วย (เคาะช่องว่างด้านหน้าให้ตรงกัน)
+    if st.button("Login"):
+        if password == "herbyadmin":
+            st.session_state.admin_logged_in = True
+            go_to("admin_dashboard")
+        else:
+            st.error("Invalid Password")
 
 def render_admin_dashboard():
     if not st.session_state.admin_logged_in:
