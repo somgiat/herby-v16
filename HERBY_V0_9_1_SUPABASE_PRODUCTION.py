@@ -1,7 +1,8 @@
-# HERBY V0.9 PRODUCTION - V0.8 MINDSET ENGINE + PROFILE LAYER
+# HERBY V0.9 1 PRODUCTION - V0.8 MINDSET ENGINE + PROFILE LAYER
 # Streamlit application - full file for copy/paste
 
 import streamlit as st
+import pandas as pd
 import json
 import os
 import hashlib
