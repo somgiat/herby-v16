@@ -1084,8 +1084,7 @@ def render_admin_login():
         if password == "herbyadmin":
            st.session_state.admin_logged_in = True
             go_to("admin_dashboard")
-            else:
-
+        else:
             st.error("Invalid Password")
 
 def render_admin_dashboard():
