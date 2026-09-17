@@ -778,6 +778,8 @@ def initialize_session_state():
         "show_results": False,
         "confirmed": False,
         "admin_logged_in": False,
+        "selected_admin_profile_id": None,
+        "selected_admin_nickname": None,
     }
     for key, value in defaults.items():
         if key not in st.session_state:
