@@ -959,6 +959,13 @@ def render_results(result):
             st.rerun()
     with col2:
         if st.button("✅ ฉันคิดว่าใช่ ไปขั้นตอนต่อไปกันเลย", type="primary", use_container_width=True):
+
+            result["feedback"] = {
+                "accuracy": feedback_accuracy,
+                "understanding": feedback_understanding,
+                "comment": feedback_comment
+            }
+            
             if save_assessment(result):
                 st.session_state.show_results = False
                 st.session_state.confirmed = True
