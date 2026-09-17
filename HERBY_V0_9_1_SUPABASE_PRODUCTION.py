@@ -1082,6 +1082,7 @@ def main():
         "home": render_home, "register": render_register, "login": render_login,
         "questionnaire": render_questionnaire, "about": render_about,
         "dashboard": render_dashboard, "review": render_review, "history": render_history,
+        "admin_login": render_admin_login, "admin_dashboard": render_admin_dashboard,
     }
     routes.get(st.session_state.page, render_home)()
 
