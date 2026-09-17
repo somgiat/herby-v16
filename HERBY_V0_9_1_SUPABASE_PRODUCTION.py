@@ -1712,7 +1712,7 @@ def main():
         "questionnaire": render_questionnaire, "about": render_about,
         "dashboard": render_dashboard, "review": render_review, "history": render_history,
         "admin_login": render_admin_login, "admin_dashboard": render_admin_dashboard,
-        "admin_users": render_admin_users,
+        "admin_users": render_admin_users, "admin_user_detail": render_admin_user_detail,
     }
     routes.get(st.session_state.page, render_home)()
 
