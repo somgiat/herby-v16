@@ -777,6 +777,7 @@ def initialize_session_state():
         "analysis_result": None,
         "show_results": False,
         "confirmed": False,
+        "admin_logged_in": False,
     }
     for key, value in defaults.items():
         if key not in st.session_state:
