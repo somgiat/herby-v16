@@ -1409,6 +1409,297 @@ def render_admin_users():
             f"ไม่สามารถโหลดข้อมูลผู้ใช้ได้: {error}"
         )
 
+def render_admin_user_detail():
+
+    if not st.session_state.admin_logged_in:
+        go_to("admin_login")
+        return
+
+    profile_id = st.session_state.get(
+        "selected_admin_profile_id"
+    )
+
+    nickname = st.session_state.get(
+        "selected_admin_nickname"
+    )
+
+    if not profile_id:
+        st.warning("ยังไม่ได้เลือกผู้ใช้")
+        if st.button("⬅️ กลับไป User Explorer"):
+            go_to("admin_users")
+        return
+
+    st.title(f"👤 {nickname or 'User Detail'}")
+
+    if st.button("⬅️ กลับไป User Explorer"):
+        go_to("admin_users")
+
+    try:
+
+        assessments = get_admin_user_assessments(
+            profile_id
+        )
+
+        st.metric(
+            "📝 จำนวนการประเมินทั้งหมด",
+            len(assessments),
+        )
+
+        if not assessments:
+            st.info(
+                "ผู้ใช้คนนี้ยังไม่มีผลการประเมิน"
+            )
+            return
+
+        latest_result = (
+            assessments[0].get("result_json")
+            or {}
+        )
+
+        latest_style = (
+            assessments[0].get("style_name")
+            or latest_result.get("style", {}).get("name")
+            or "-"
+        )
+
+        latest_feedback = (
+            latest_result.get("feedback")
+            or {}
+        )
+
+        st.subheader("📌 ข้อมูลล่าสุด")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            st.write(
+                f"**สไตล์ล่าสุด:**  \n"
+                f"{latest_style}"
+            )
+
+            st.write(
+                f"**Learning Stage:**  \n"
+                f"{assessments[0].get('learning_stage') or '-'}"
+            )
+
+        with col2:
+
+            understanding = latest_feedback.get(
+                "understanding"
+            )
+
+            accuracy = latest_feedback.get(
+                "accuracy"
+            )
+
+            st.metric(
+                "🧠 Understanding Score",
+                (
+                    f"{understanding} / 5"
+                    if understanding is not None
+                    else "ยังไม่มี Feedback"
+                ),
+            )
+
+            st.write(
+                f"**ความตรงของผลลัพธ์:**  \n"
+                f"{accuracy or 'ยังไม่มี Feedback'}"
+            )
+
+        st.divider()
+        st.subheader("📚 ประวัติการประเมิน")
+
+        for number, assessment in enumerate(
+            assessments,
+            start=1,
+        ):
+
+            result = (
+                assessment.get("result_json")
+                or {}
+            )
+
+            assessment_date = (
+                assessment.get("assessment_date")
+                or "-"
+            )
+
+            if assessment_date != "-":
+                assessment_date_display = (
+                    assessment_date
+                    .replace("T", " ")
+                    [:16]
+                )
+            else:
+                assessment_date_display = "-"
+
+            style_name = (
+                assessment.get("style_name")
+                or result.get("style", {}).get("name")
+                or "-"
+            )
+
+            assessment_number = (
+                len(assessments) - number + 1
+            )
+
+            expander_title = (
+                f"ครั้งที่ {assessment_number} • "
+                f"{assessment_date_display} • "
+                f"{style_name}"
+            )
+
+            with st.expander(
+                expander_title,
+                expanded=(number == 1),
+            ):
+
+                st.markdown("### 📈 ผลการวิเคราะห์")
+
+                st.write(
+                    f"**สไตล์:** {style_name}"
+                )
+
+                learning_stage = (
+                    assessment.get("learning_stage")
+                    or result.get("mindsets", {}).get(
+                        "learning_stage"
+                    )
+                    or "-"
+                )
+
+                st.write(
+                    f"**Learning Stage:** "
+                    f"{learning_stage}"
+                )
+
+                insight = result.get("insight")
+
+                if insight:
+                    st.markdown(
+                        "#### 🌟 สิ่งที่ Herby เรียนรู้"
+                    )
+                    st.info(insight)
+
+                observations = (
+                    result.get("observations")
+                    or []
+                )
+
+                if observations:
+
+                    st.markdown(
+                        "#### 🔎 สิ่งที่ Herby สังเกตเห็น"
+                    )
+
+                    for observation in observations:
+                        st.warning(observation)
+
+                answers = (
+                    result.get("answers")
+                    or {}
+                )
+
+                if answers:
+
+                    st.markdown(
+                        "#### 📝 คำตอบของผู้ใช้"
+                    )
+
+                    st.write(
+                        f"**ช่วงอายุ:** "
+                        f"{answers.get('age', '-')}"
+                    )
+
+                    st.write(
+                        f"**เป้าหมาย:** "
+                        f"{answers.get('goal', '-')}"
+                    )
+
+                    st.write(
+                        f"**ระยะเวลา:** "
+                        f"{answers.get('timeline', '-')}"
+                    )
+
+                    st.write(
+                        f"**ประสบการณ์:** "
+                        f"{answers.get('experience', '-')}"
+                    )
+
+                    assets = (
+                        answers.get("assets")
+                        or []
+                    )
+
+                    st.write(
+                        f"**สินทรัพย์ที่สนใจ:** "
+                        f"{', '.join(assets) if assets else '-'}"
+                    )
+
+                    st.write(
+                        f"**พฤติกรรมเมื่อขาดทุน:** "
+                        f"{answers.get('feeling', '-')}"
+                    )
+
+                    st.write(
+                        f"**ระดับความผันผวน:** "
+                        f"{answers.get('volatility', '-')} / 10"
+                    )
+
+                feedback = (
+                    result.get("feedback")
+                    or {}
+                )
+
+                st.markdown(
+                    "#### 💬 Feedback"
+                )
+
+                if feedback:
+
+                    st.write(
+                        f"**ความตรงของผลลัพธ์:** "
+                        f"{feedback.get('accuracy', '-')}"
+                    )
+
+                    feedback_score = feedback.get(
+                        "understanding"
+                    )
+
+                    st.write(
+                        f"**Understanding Score:** "
+                        f"{feedback_score if feedback_score is not None else '-'}"
+                        f" / 5"
+                    )
+
+                    comment = (
+                        feedback.get("comment")
+                        or ""
+                    ).strip()
+
+                    if comment:
+                        st.success(
+                            f"ความคิดเห็น: {comment}"
+                        )
+                    else:
+                        st.caption(
+                            "ผู้ใช้ไม่ได้เขียนความคิดเห็นเพิ่มเติม"
+                        )
+
+                else:
+
+                    st.caption(
+                        "Assessment นี้สร้างก่อนเริ่มใช้ Feedback System"
+                    )
+
+    except Exception as error:
+
+        st.error(
+            f"ไม่สามารถโหลดรายละเอียดผู้ใช้ได้: {error}"
+        )
+
+
 def main():
     initialize_session_state()
     apply_green_theme()
