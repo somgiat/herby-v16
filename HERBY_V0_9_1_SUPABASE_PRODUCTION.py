@@ -1090,6 +1090,73 @@ def render_admin_login():
         else:
             st.error("Invalid Password")
 
+def get_admin_stats():
+
+    profiles = supabase_request(
+        "GET",
+        PROFILES_TABLE,
+        params={
+            "select": "id"
+        }
+    ) or []
+
+    assessments = supabase_request(
+        "GET",
+        ASSESSMENTS_TABLE,
+        params={
+            "select": "profile_id,result_json"
+        }
+    ) or []
+
+    total_users = len(profiles)
+
+    total_assessments = len(assessments)
+
+    assessment_count = {}
+
+    understanding_scores = []
+
+    for row in assessments:
+
+        profile_id = row.get("profile_id")
+
+        assessment_count[profile_id] = (
+            assessment_count.get(profile_id, 0) + 1
+        )
+
+        feedback = (
+            row.get("result_json", {})
+            .get("feedback", {})
+        )
+
+        score = feedback.get("understanding")
+
+        if isinstance(score, int):
+            understanding_scores.append(score)
+
+    returning_users = sum(
+        1
+        for count in assessment_count.values()
+        if count > 1
+    )
+
+    average_understanding = (
+        round(
+            sum(understanding_scores)
+            / len(understanding_scores),
+            2
+        )
+        if understanding_scores
+        else 0
+    )
+
+    return {
+        "total_users": total_users,
+        "total_assessments": total_assessments,
+        "returning_users": returning_users,
+        "average_understanding": average_understanding,
+    }
+
 def render_admin_dashboard():
     if not st.session_state.admin_logged_in:
         go_to("admin_login")
