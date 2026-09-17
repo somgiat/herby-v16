@@ -1275,7 +1275,8 @@ def render_admin_dashboard():
             type="primary",
             use_container_width=True,
         ):
-            go_to(admin_users")
+            go_to("admin_users")
+
 
 def render_admin_users():
 
