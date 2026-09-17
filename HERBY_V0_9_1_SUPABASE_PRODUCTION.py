@@ -1155,6 +1155,83 @@ def get_admin_stats():
         "average_understanding": average_understanding,
     }
 
+def get_admin_users():
+
+    profiles = supabase_request(
+        "GET",
+        PROFILES_TABLE,
+        params={
+            "select": "id,nickname,created_at",
+            "order": "created_at.desc",
+        },
+    ) or []
+
+    assessments = supabase_request(
+        "GET",
+        ASSESSMENTS_TABLE,
+        params={
+            "select": "profile_id,assessment_date,style_name,result_json",
+            "order": "assessment_date.desc",
+        },
+    ) or []
+
+    assessments_by_user = {}
+
+    for assessment in assessments:
+
+        profile_id = assessment.get("profile_id")
+
+        if not profile_id:
+            continue
+
+        if profile_id not in assessments_by_user:
+            assessments_by_user[profile_id] = []
+
+        assessments_by_user[profile_id].append(assessment)
+
+    users = []
+
+    for profile in profiles:
+
+        profile_id = profile.get("id")
+        user_assessments = assessments_by_user.get(profile_id, [])
+
+        latest_assessment = (
+            user_assessments[0]
+            if user_assessments
+            else None
+        )
+
+        latest_style = "ยังไม่มีผลการประเมิน"
+        latest_assessment_date = None
+
+        if latest_assessment:
+
+            latest_style = (
+                latest_assessment.get("style_name")
+                or latest_assessment.get("result_json", {})
+                .get("style", {})
+                .get("name")
+                or "ไม่พบข้อมูลสไตล์"
+            )
+
+            latest_assessment_date = latest_assessment.get(
+                "assessment_date"
+            )
+
+        users.append(
+            {
+                "id": profile_id,
+                "nickname": profile.get("nickname", "-"),
+                "created_at": profile.get("created_at"),
+                "assessment_count": len(user_assessments),
+                "latest_style": latest_style,
+                "latest_assessment_date": latest_assessment_date,
+            }
+        )
+
+    return users
+
 def render_admin_dashboard():
 
     if not st.session_state.admin_logged_in:
