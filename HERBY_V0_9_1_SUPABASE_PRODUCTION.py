@@ -1252,6 +1252,232 @@ def get_admin_user_assessments(profile_id):
 
     return assessments
 
+def get_admin_analytics():
+
+    assessments = supabase_request(
+        "GET",
+        ASSESSMENTS_TABLE,
+        params={
+            "select": (
+                "id,profile_id,assessment_date,"
+                "style_name,learning_stage,result_json"
+            ),
+            "order": "assessment_date.desc",
+        },
+    ) or []
+
+    latest_by_user = {}
+
+    for assessment in assessments:
+
+        profile_id = assessment.get("profile_id")
+
+        if not profile_id:
+            continue
+
+        if profile_id not in latest_by_user:
+            latest_by_user[profile_id] = assessment
+
+    style_counts = {}
+    risk_counts = {}
+    behavior_counts = {}
+    learning_counts = {}
+    accuracy_counts = {}
+
+    understanding_scores = []
+    feedback_comments = []
+
+    high_risk_users = 0
+    defensive_high_risk_users = 0
+
+    for assessment in latest_by_user.values():
+
+        result = assessment.get("result_json") or {}
+
+        style_name = (
+            assessment.get("style_name")
+            or result.get("style", {}).get("name")
+            or "ไม่พบข้อมูล"
+        )
+
+        style_counts[style_name] = (
+            style_counts.get(style_name, 0) + 1
+        )
+
+        mindsets = result.get("mindsets") or {}
+
+        risk = (
+            mindsets.get("risk_tolerance")
+            or "ไม่พบข้อมูล"
+        )
+
+        behavior = (
+            mindsets.get("stress_behavior")
+            or "ไม่พบข้อมูล"
+        )
+
+        learning_stage = (
+            assessment.get("learning_stage")
+            or mindsets.get("learning_stage")
+            or "ไม่พบข้อมูล"
+        )
+
+        risk_counts[risk] = (
+            risk_counts.get(risk, 0) + 1
+        )
+
+        behavior_counts[behavior] = (
+            behavior_counts.get(behavior, 0) + 1
+        )
+
+        learning_counts[learning_stage] = (
+            learning_counts.get(learning_stage, 0) + 1
+        )
+
+        if risk == "high":
+
+            high_risk_users += 1
+
+            if behavior in {"escape", "reduce"}:
+                defensive_high_risk_users += 1
+
+    for assessment in assessments:
+
+        result = assessment.get("result_json") or {}
+        feedback = result.get("feedback") or {}
+
+        accuracy = feedback.get("accuracy")
+
+        if accuracy:
+
+            accuracy_counts[accuracy] = (
+                accuracy_counts.get(accuracy, 0) + 1
+            )
+
+        understanding = feedback.get(
+            "understanding"
+        )
+
+        if isinstance(understanding, (int, float)):
+            understanding_scores.append(
+                understanding
+            )
+
+        comment = (
+            feedback.get("comment")
+            or ""
+        ).strip()
+
+        if comment:
+
+            feedback_comments.append(
+                {
+                    "comment": comment,
+                    "accuracy": accuracy or "-",
+                    "understanding": understanding,
+                    "assessment_date": (
+                        assessment.get(
+                            "assessment_date"
+                        )
+                        or "-"
+                    ),
+                }
+            )
+
+    average_understanding = (
+        round(
+            sum(understanding_scores)
+            / len(understanding_scores),
+            2,
+        )
+        if understanding_scores
+        else 0
+    )
+
+    feedback_response_rate = (
+        round(
+            len(understanding_scores)
+            / len(assessments)
+            * 100,
+            1,
+        )
+        if assessments
+        else 0
+    )
+
+    risk_behavior_gap_rate = (
+        round(
+            defensive_high_risk_users
+            / high_risk_users
+            * 100,
+            1,
+        )
+        if high_risk_users
+        else 0
+    )
+
+    return {
+        "total_latest_users": len(latest_by_user),
+        "total_assessments": len(assessments),
+        "feedback_count": len(understanding_scores),
+        "average_understanding": average_understanding,
+        "feedback_response_rate": feedback_response_rate,
+        "style_counts": style_counts,
+        "risk_counts": risk_counts,
+        "behavior_counts": behavior_counts,
+        "learning_counts": learning_counts,
+        "accuracy_counts": accuracy_counts,
+        "feedback_comments": feedback_comments,
+        "high_risk_users": high_risk_users,
+        "defensive_high_risk_users": defensive_high_risk_users,
+        "risk_behavior_gap_rate": risk_behavior_gap_rate,
+    }
+
+def render_admin_bar_chart(
+    title,
+    counts,
+    category_label,
+):
+
+    st.subheader(title)
+
+    if not counts:
+
+        st.info("ยังไม่มีข้อมูลเพียงพอ")
+        return
+
+    chart_data = pd.DataFrame(
+        [
+            {
+                category_label: category,
+                "จำนวน": count,
+            }
+            for category, count in counts.items()
+        ]
+    )
+
+    chart_data = chart_data.sort_values(
+        by="จำนวน",
+        ascending=False,
+    )
+
+    st.bar_chart(
+        chart_data,
+        x=category_label,
+        y="จำนวน",
+    )
+
+    with st.expander("🔢 ดูตัวเลขทั้งหมด"):
+
+        for row in chart_data.to_dict(
+            orient="records"
+        ):
+
+            st.write(
+                f"**{row[category_label]}:** "
+                f"{row['จำนวน']} คน"
+            )
+
 
 def render_admin_dashboard():
 
