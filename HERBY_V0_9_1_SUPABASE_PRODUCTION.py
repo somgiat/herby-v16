@@ -928,6 +928,29 @@ def render_results(result):
     st.write(result["style"]["description"])
     st.caption("ผลลัพธ์นี้เป็นภาพสะท้อนปัจจุบัน ไม่ใช่คำแนะนำให้ซื้อหรือขายสินทรัพย์ และสไตล์สามารถเปลี่ยนแปลงได้")
     st.header("❓ Herby เข้าใจคุณถูกไหม?")
+
+    feedback_accuracy = st.radio(
+        "💚 ผลลัพธ์นี้ตรงกับตัวคุณมากแค่ไหน?",
+        [
+            "👍 ตรงมาก",
+            "🙂 ค่อนข้างตรง",
+            "😕 ยังไม่ค่อยตรง",
+            "😣 ไม่ตรงเลย"
+        ]
+    )
+
+    feedback_understanding = st.slider(
+        "🧠 ผลลัพธ์นี้ช่วยให้คุณเข้าใจตัวเองมากขึ้นแค่ไหน?",
+        1,
+        5,
+        3
+    )
+
+    feedback_comment = st.text_area(
+        "💬 มีอะไรที่อยากให้ Herby ปรับปรุงเพิ่มเติมไหม?"
+    )
+
+    
     col1, col2 = st.columns(2)
     with col1:
         if st.button("🔄 ฉันว่ายังไม่ใช่ กลับไปแก้ไขคำตอบ", use_container_width=True):
