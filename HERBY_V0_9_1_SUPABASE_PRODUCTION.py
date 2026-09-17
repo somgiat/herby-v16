@@ -1079,7 +1079,7 @@ def render_admin_login():
         "Admin Password",
         type="password"
     )
-
+password = st.text_input("Enter Admin Password", type="password")
 if st.button("Login"):
     if password == "herbyadmin":
         st.session_state.admin_logged_in = True
