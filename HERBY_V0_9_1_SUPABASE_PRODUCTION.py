@@ -1234,6 +1234,24 @@ def get_admin_users():
 
     return users
 
+def get_admin_user_assessments(profile_id):
+
+    assessments = supabase_request(
+        "GET",
+        ASSESSMENTS_TABLE,
+        params={
+            "select": (
+                "id,profile_id,assessment_date,"
+                "style_name,learning_stage,result_json"
+            ),
+            "profile_id": f"eq.{profile_id}",
+            "order": "assessment_date.desc",
+        },
+    ) or []
+
+    return assessments
+
+
 def render_admin_dashboard():
 
     if not st.session_state.admin_logged_in:
