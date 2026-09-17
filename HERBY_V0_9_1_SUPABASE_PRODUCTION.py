@@ -824,6 +824,8 @@ def render_home():
         go_to("register")
     if st.button("💚 ฉันเคยทำแบบประเมินแล้ว", use_container_width=True):
         go_to("login")
+    if st.button("🔐 Admin"):
+        go_to("admin_login")
 
 def render_register():
     render_back_button("home")
