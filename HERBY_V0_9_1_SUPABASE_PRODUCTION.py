@@ -1072,6 +1072,27 @@ def render_history():
         style = result.get("style", {}).get("name", "-")
         with st.expander(f"ครั้งที่ {len(history)-number+1} • {when} • {style}"):
             render_result_snapshot(result)
+def render_admin_login():
+    render_back_button("home")
+    st.title("🔐 Admin Login")
+    password = st.text_input(
+        "Admin Password",
+        type="password"
+    )
+
+    if st.button("Login"):
+    if password == "herbyadmin":
+       st.session_state.admin_logged_in = True
+        go_to("admin_dashboard")
+        else:
+
+        st.error("Invalid Password")
+
+def render_admin_dashboard():
+    if not st.session_state.admin_logged_in:
+        go_to("admin_login")
+    st.title("💚 HERBY ADMIN DASHBOARD")
+    st.success("Welcome Founder 😁")
 
 def main():
     initialize_session_state()
