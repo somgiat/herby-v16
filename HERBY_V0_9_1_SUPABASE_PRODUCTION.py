@@ -1075,14 +1075,12 @@ def render_history():
 def render_admin_login():
     render_back_button("home")
     st.title("🔐 Admin Login")
-    
-    # ใช้ช่องใส่ password ตัวนี้ตัวเดียวพอครับ
+   
     password = st.text_input(
         "Admin Password",
         type="password"
     )
     
-    # ขยับปุ่มกดและเงื่อนไขทั้งหมดเข้ามาอยู่ในฟังก์ชันด้วย (เคาะช่องว่างด้านหน้าให้ตรงกัน)
     if st.button("Login"):
         if password == "herbyadmin":
             st.session_state.admin_logged_in = True
@@ -1158,10 +1156,43 @@ def get_admin_stats():
     }
 
 def render_admin_dashboard():
+
     if not st.session_state.admin_logged_in:
+
         go_to("admin_login")
+
     st.title("💚 HERBY ADMIN DASHBOARD")
+
     st.success("Welcome Founder 😁")
+
+    stats = get_admin_stats()
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        st.metric(
+            "👥 Users",
+            stats["total_users"]
+        )
+
+        st.metric(
+            "🔄 Returning",
+            stats["returning_users"]
+        )
+
+    with col2:
+
+        st.metric(
+            "📝 Assessments",
+            stats["total_assessments"]
+        )
+
+        st.metric(
+            "🧠 Understanding",
+            stats["average_understanding"]
+        )
+
 
 def main():
     initialize_session_state()
