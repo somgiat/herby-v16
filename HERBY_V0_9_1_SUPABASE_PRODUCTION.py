@@ -1270,6 +1270,106 @@ def render_admin_dashboard():
             stats["average_understanding"]
         )
 
+def render_admin_users():
+
+    if not st.session_state.admin_logged_in:
+        go_to("admin_login")
+        return
+
+    st.title("👥 HERBY USER EXPLORER")
+
+    if st.button("⬅️ กลับไป Admin Dashboard"):
+        go_to("admin_dashboard")
+
+    try:
+
+        users = get_admin_users()
+
+        search_text = st.text_input(
+            "🔍 ค้นหาผู้ใช้ด้วย Nickname",
+            placeholder="พิมพ์ Nickname ที่ต้องการค้นหา",
+        )
+
+        if search_text.strip():
+
+            keyword = search_text.strip().casefold()
+
+            users = [
+                user
+                for user in users
+                if keyword in user["nickname"].casefold()
+            ]
+
+        st.caption(f"พบผู้ใช้ {len(users)} คน")
+
+        if not users:
+
+            st.info("ไม่พบผู้ใช้ตามเงื่อนไขที่ค้นหา")
+            return
+
+        for user in users:
+
+            created_at = user.get("created_at")
+
+            if created_at:
+                created_display = (
+                    created_at
+                    .replace("T", " ")
+                    [:16]
+                )
+            else:
+                created_display = "-"
+
+            latest_date = user.get(
+                "latest_assessment_date"
+            )
+
+            if latest_date:
+                latest_date_display = (
+                    latest_date
+                    .replace("T", " ")
+                    [:16]
+                )
+            else:
+                latest_date_display = "-"
+
+            with st.container(border=True):
+
+                st.subheader(
+                    f"👤 {user['nickname']}"
+                )
+
+                st.write(
+                    f"**📈 สไตล์ล่าสุด:** "
+                    f"{user['latest_style']}"
+                )
+
+                col1, col2 = st.columns(2)
+
+                with col1:
+
+                    st.metric(
+                        "📝 จำนวนการประเมิน",
+                        user["assessment_count"],
+                    )
+
+                with col2:
+
+                    st.write(
+                        f"**สร้างโปรไฟล์:**  \n"
+                        f"{created_display}"
+                    )
+
+                    st.write(
+                        f"**ประเมินล่าสุด:**  \n"
+                        f"{latest_date_display}"
+                    )
+
+    except Exception as error:
+
+        st.error(
+            f"ไม่สามารถโหลดข้อมูลผู้ใช้ได้: {error}"
+        )
 
 def main():
     initialize_session_state()
