@@ -1375,6 +1375,16 @@ def render_admin_users():
                         f"{latest_date_display}"
                     )
 
+                    if st.button(
+                        "🔎 ดูรายละเอียดผู้ใช้",
+                        key=f"view_user_{user['id']}",
+                        use_container_width=True,
+                    ):
+                    st.session_state.selected_admin_profile_id = user["id"]
+                    st.session_state.selected_admin_nickname = user["nickname"]
+                    go_to("admin_user_detail")
+
+    
     except Exception as error:
 
         st.error(
