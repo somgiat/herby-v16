@@ -10,7 +10,7 @@ import requests
 from datetime import datetime
 
 st.set_page_config(
-    page_title="Herby V0.9",
+    page_title="Herby Your Digital Financial Mentor",
     page_icon="💚",
     layout="centered",
 )
