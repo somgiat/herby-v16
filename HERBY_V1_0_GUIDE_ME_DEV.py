@@ -2565,7 +2565,7 @@ def main():
         "dashboard": render_dashboard, "review": render_review, "history": render_history,
         "admin_login": render_admin_login, "admin_dashboard": render_admin_dashboard,
         "admin_users": render_admin_users, "admin_user_detail": render_admin_user_detail,
-        "admin_analytics": render_admin_analytics,
+        "admin_analytics": render_admin_analytics, "guide_me": render_guide_me,
     }
     routes.get(st.session_state.page, render_home)()
 
