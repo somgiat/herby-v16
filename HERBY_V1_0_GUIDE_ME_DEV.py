@@ -1712,6 +1712,88 @@ def build_asset_suitability_results(result):
         reverse=True,
     )
 
+def render_asset_suitability_card(
+    suitability,
+    rank,
+):
+
+    asset_name = suitability["asset_name"]
+    icon = suitability["icon"]
+    score = suitability["score"]
+    label = suitability["label"]
+
+    with st.container(border=True):
+
+        st.subheader(
+            f"อันดับ {rank} • {icon} {asset_name}"
+        )
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            st.metric(
+                "🧭 Suitability Score",
+                f"{score} / 100",
+            )
+
+        with col2:
+
+            st.write(
+                f"**ระดับความสอดคล้อง**  \n"
+                f"{label}"
+            )
+
+            st.write(
+                f"**บทบาทที่อาจเหมาะสม**  \n"
+                f"{suitability['portfolio_role']}"
+            )
+
+        st.progress(score / 100)
+
+        with st.expander(
+            "🔎 ดูเหตุผล จุดแข็ง จุดอ่อน และข้อควรระวัง"
+        ):
+
+            st.markdown(
+                "#### ✅ สิ่งที่สอดคล้องกับคุณ"
+            )
+
+            alignments = suitability[
+                "alignments"
+            ]
+
+            if alignments:
+
+                for item in alignments:
+                    st.write(f"• {item}")
+
+            else:
+
+                st.caption(
+                    "ยังไม่พบความสอดคล้องเด่นชัด"
+                )
+
+            st.markdown("#### 📈 จุดแข็ง")
+
+            for item in suitability["strengths"]:
+                st.write(f"• {item}")
+
+            st.markdown("#### 📉 จุดอ่อน")
+
+            for item in suitability["weaknesses"]:
+                st.write(f"• {item}")
+
+            all_cautions = (
+                suitability["cautions"]
+                + suitability["general_cautions"]
+            )
+
+            st.markdown("#### ⚠️ ข้อควรระวัง")
+
+            for item in dict.fromkeys(all_cautions):
+                st.write(f"• {item}")
+
 
 def render_guide_me():
 
