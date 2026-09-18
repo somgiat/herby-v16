@@ -662,13 +662,10 @@ def get_supabase_config():
     return url, key
 
 def get_admin_password():
-    try: return str(
-        st.secret["ADMIN_PASSWORD"]
-    ).strip()
+    try:
+        return str(st.secret["ADMIN_PASSWORD"]).strip()
     except Exception:
-    return os.getenv(
-    "ADMIN_PASSWORD",""
-    ).strip()
+        return os.getenv("ADMIN_PASSWORD", "").strip()
 
 def supabase_headers(prefer=None):
     _, key = get_supabase_config()
