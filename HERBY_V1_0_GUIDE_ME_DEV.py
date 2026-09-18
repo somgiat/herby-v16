@@ -1186,7 +1186,7 @@ def render_guide_me():
 
     if not latest:
 
-        st.title("💚 Guide Me")
+        st.title("ℹ️ Guide Me")
 
         st.info(
             "Herby ต้องรู้จักคุณก่อน "
@@ -1225,7 +1225,7 @@ def render_guide_me():
         answers.get("name", "คุณ"),
     )
 
-    st.title("💚 Guide Me")
+    st.title("ℹ️ Guide Me")
     st.subheader("Herby แนะนำ")
 
     st.info(
@@ -1428,7 +1428,7 @@ def render_dashboard():
     if not profile:
         go_to("home")
     latest = profile.get("latest_assessment")
-    st.title("💚 Dashboard")
+    st.title("📊 Dashboard")
     st.subheader(f"สวัสดี {profile['nickname']} 👋")
     st.success("Herby จำคุณได้")
     if latest:
@@ -1440,7 +1440,7 @@ def render_dashboard():
         st.divider()
 
         if st.button(
-            "💚 Guide Me — Herby แนะนำ",
+            "ℹ️ Guide Me — Herby แนะนำ",
             type="primary",
             use_container_width=True,
         ):
