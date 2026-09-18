@@ -1,4 +1,4 @@
-# HERBY V0.9 1 PRODUCTION - V0.8 MINDSET ENGINE + PROFILE LAYER
+# Create V1.0 Guide Me development baseline
 # Streamlit application - full file for copy/paste
 
 import streamlit as st
