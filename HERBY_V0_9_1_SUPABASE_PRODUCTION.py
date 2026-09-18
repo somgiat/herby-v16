@@ -1521,7 +1521,8 @@ def render_admin_dashboard():
 
     st.success("Welcome Founder 😁")
 
-    stats = get_admin_stats()
+    stats = safe_admin_data(get_admin_stats)
+    if not stats: return
 
     col1, col2 = st.columns(2)
 
