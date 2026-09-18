@@ -665,10 +665,10 @@ def get_admin_password():
     try: return str(
         st.secret["ADMIN_PASSWORD"]
     ).strip()
-except Exception:
-return os.getenv(
+    except Exception:
+    return os.getenv(
     "ADMIN_PASSWORD",""
-).strip()
+    ).strip()
 
 def supabase_headers(prefer=None):
     _, key = get_supabase_config()
