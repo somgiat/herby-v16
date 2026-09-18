@@ -661,6 +661,14 @@ def get_supabase_config():
         key = os.getenv("SUPABASE_KEY", "").strip()
     return url, key
 
+def get_admin_password():
+    try: return str(
+        st.secret["ADMIN_PASSWORD"]
+    ).strip()
+except Exception:
+return os.getenv(
+    "ADMIN_PASSWORD",""
+).strip()
 
 def supabase_headers(prefer=None):
     _, key = get_supabase_config()
