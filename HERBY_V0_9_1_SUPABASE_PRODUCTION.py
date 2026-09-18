@@ -772,6 +772,22 @@ def database_health_check():
     supabase_request("GET", PROFILES_TABLE, params={"select": "id", "limit": "1"})
     supabase_request("GET", ASSESSMENTS_TABLE, params={"select": "id", "limit": "1"})
     return True
+def safe_admin_data(loader_function):
+
+    try:
+
+        return loader_function()
+
+    except Exception as error:
+
+        st.error(
+            "❌ ไม่สามารถเชื่อมต่อฐานข้อมูลได้"
+        )
+
+        st.caption(str(error))
+
+        return None
+
 
 # ============================================================
 # SESSION AND NAVIGATION
