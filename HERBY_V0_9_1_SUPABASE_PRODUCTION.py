@@ -805,6 +805,17 @@ def logout():
         del st.session_state[key]
     st.rerun()
 
+def admin_logout():
+
+    st.session_state.admin_logged_in = False
+
+    st.session_state.selected_admin_profile_id = None
+
+    st.session_state.selected_admin_nickname = None
+
+    go_to("home")
+
+
 def render_back_button(destination="home"):
     if st.button("⬅️ ย้อนกลับ"):
         go_to(destination)
