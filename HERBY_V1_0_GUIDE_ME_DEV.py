@@ -2040,18 +2040,62 @@ def render_guide_me():
                         f"• {interpretation}"
                     )
 
-    st.divider()
-    st.header("🧩 ขั้นตอนต่อไป")
+st.divider()
+    st.header("🧭 สินทรัพย์ที่ Herby แนะนำให้พิจารณา")
 
-    st.success(
-        "ข้อมูลด้านบนจะเป็นฐานให้ Herby "
-        "ประเมินว่าสินทรัพย์ประเภทใด "
-        "สอดคล้องกับคุณมากน้อยเพียงใด"
+    st.info(
+        f"จากข้อมูลล่าสุดของคุณ {nickname} "
+        "Herby ได้จัดอันดับประเภทสินทรัพย์ "
+        "ตามความสอดคล้องกับเป้าหมาย ระยะเวลา "
+        "ความเสี่ยง พฤติกรรม และประสบการณ์ของคุณ"
     )
 
     st.caption(
-        "Asset Suitability จะถูกเพิ่มใน Sprint ถัดไป"
+        "Suitability Score แสดงความสอดคล้องกับโปรไฟล์ "
+        "ไม่ใช่การคาดการณ์ผลตอบแทนหรือคำสั่งซื้อ"
     )
+
+    suitability_results = (
+        build_asset_suitability_results(
+            result
+        )
+    )
+
+    top_results = suitability_results[:5]
+
+    for rank, suitability in enumerate(
+        top_results,
+        start=1,
+    ):
+
+        render_asset_suitability_card(
+            suitability,
+            rank,
+        )
+
+    with st.expander(
+        "📚 ดูสินทรัพย์ประเภทอื่นทั้งหมด"
+    ):
+
+        for rank, suitability in enumerate(
+            suitability_results[5:],
+            start=6,
+        ):
+
+            render_asset_suitability_card(
+                suitability,
+                rank,
+            )
+
+    st.divider()
+
+    st.warning(
+        "ผลลัพธ์นี้อ้างอิงจากคำตอบล่าสุดของคุณ "
+        "และข้อมูลเชิงลักษณะของสินทรัพย์เท่านั้น "
+        "ยังไม่ได้ประเมินผลิตภัณฑ์หรือหุ้นรายตัว "
+        "ราคา มูลค่า ข่าว หรือจังหวะเข้าซื้อ"
+    )
+
 
 
 def render_dashboard():
