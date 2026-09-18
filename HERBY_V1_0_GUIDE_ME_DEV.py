@@ -1435,6 +1435,259 @@ def get_profile_numeric_levels(result):
         ),
     }
 
+def score_asset_suitability(
+    asset_name,
+    asset_profile,
+    result,
+):
+
+    answers = result.get("answers") or {}
+    mindsets = result.get("mindsets") or {}
+    relationships = result.get("relationships") or []
+
+    levels = get_profile_numeric_levels(result)
+
+    asset_risk = asset_profile["risk_level"]
+    asset_growth = asset_profile["growth_level"]
+    minimum_timeline = asset_profile["minimum_timeline"]
+    required_experience = asset_profile["experience_level"]
+
+    score = 50
+    alignments = []
+    cautions = []
+
+    risk_difference = abs(
+        levels["risk"] - asset_risk
+    )
+
+    if risk_difference == 0:
+        score += 18
+        alignments.append(
+            "ระดับความเสี่ยงของสินทรัพย์สอดคล้องกับ "
+            "ระดับที่คุณระบุว่ารับได้"
+        )
+    elif risk_difference == 1:
+        score += 10
+        alignments.append(
+            "ระดับความเสี่ยงของสินทรัพย์อยู่ใกล้เคียง "
+            "กับความพร้อมรับความผันผวนของคุณ"
+        )
+    elif asset_risk > levels["risk"]:
+        score -= 18
+        cautions.append(
+            "สินทรัพย์นี้มีความเสี่ยงสูงกว่า "
+            "ระดับที่คุณระบุว่ารับได้"
+        )
+    else:
+        score -= 3
+        cautions.append(
+            "สินทรัพย์นี้อาจมีโอกาสเติบโตต่ำกว่า "
+            "ความต้องการของคุณ"
+        )
+
+    if levels["timeline"] >= minimum_timeline:
+        score += 12
+        alignments.append(
+            "ระยะเวลาลงทุนของคุณช่วยรองรับ "
+            "ลักษณะของสินทรัพย์นี้"
+        )
+    else:
+        score -= 18
+        cautions.append(
+            "ระยะเวลาที่คุณอาจต้องใช้เงิน "
+            "สั้นกว่าระยะเวลาที่เหมาะกับสินทรัพย์นี้"
+        )
+
+    growth_difference = abs(
+        levels["growth"] - asset_growth
+    )
+
+    if growth_difference <= 1:
+        score += 12
+        alignments.append(
+            "ศักยภาพการเติบโตของสินทรัพย์ "
+            "สอดคล้องกับสิ่งที่คุณต้องการ"
+        )
+    elif asset_growth > levels["growth"]:
+        score -= 7
+        cautions.append(
+            "โอกาสเติบโตที่สูงขึ้นมาพร้อม "
+            "ความผันผวนที่อาจมากเกินความต้องการของคุณ"
+        )
+    else:
+        score -= 5
+        cautions.append(
+            "สินทรัพย์นี้อาจไม่ตอบโจทย์ "
+            "ความต้องการเติบโตของคุณทั้งหมด"
+        )
+
+    if levels["experience"] >= required_experience:
+        score += 6
+        alignments.append(
+            "ประสบการณ์ปัจจุบันของคุณช่วยให้ "
+            "ทำความเข้าใจสินทรัพย์ประเภทนี้ได้"
+        )
+    else:
+        score -= 8
+        cautions.append(
+            "สินทรัพย์นี้อาจต้องใช้ความรู้หรือ "
+            "ประสบการณ์มากกว่าที่คำตอบปัจจุบันสะท้อน"
+        )
+
+    high_variation_assets = {
+        "หุ้นไทย",
+        "หุ้นต่างประเทศ",
+        "Bitcoin",
+    }
+
+    defensive_behaviors = {
+        "escape",
+        "reduce",
+    }
+
+    patient_behaviors = {
+        "endure",
+        "accept",
+        "actively_add",
+    }
+
+    behavior = mindsets.get("stress_behavior")
+
+    if asset_name in high_variation_assets:
+
+        if behavior in patient_behaviors:
+            score += 10
+            alignments.append(
+                "พฤติกรรมที่คุณคาดว่าจะใช้เมื่อราคาลดลง "
+                "สนับสนุนการถือสินทรัพย์ที่ผันผวน"
+            )
+
+        elif behavior in defensive_behaviors:
+            score -= 15
+            cautions.append(
+                "เมื่อขาดทุนมาก คุณมีแนวโน้มลดความเสี่ยง "
+                "ซึ่งอาจไม่สอดคล้องกับความผันผวนของสินทรัพย์นี้"
+            )
+
+    safety_assets = {
+        "เงินฝาก",
+        "พันธบัตร / ตราสารหนี้",
+    }
+
+    if asset_name in safety_assets:
+
+        if levels["safety"] >= 4:
+            score += 12
+            alignments.append(
+                "สินทรัพย์นี้สนับสนุนความต้องการ "
+                "รักษาความมั่นคงของคุณ"
+            )
+
+        elif levels["growth"] >= 4:
+            score -= 6
+            cautions.append(
+                "สินทรัพย์นี้ช่วยด้านความมั่นคง "
+                "แต่อาจไม่เพียงพอสำหรับเป้าหมายเติบโตหากใช้เป็นพอร์ตหลัก"
+            )
+
+    interested_assets = set(
+        answers.get("assets")
+        or []
+    )
+
+    interest_mapping = {
+        "พันธบัตร / ตราสารหนี้": {
+            "พันธบัตร",
+            "ตราสารหนี้",
+        },
+        "กองทุนผสม": {
+            "กองทุนรวม",
+            "RMF / SSF",
+        },
+        "ETF หุ้น": {
+            "ETF",
+        },
+    }
+
+    related_interests = interest_mapping.get(
+        asset_name,
+        {asset_name},
+    )
+
+    if interested_assets.intersection(
+        related_interests
+    ):
+        score += 5
+        alignments.append(
+            "สินทรัพย์นี้อยู่ในกลุ่มที่คุณเคยระบุว่าสนใจ"
+        )
+
+    relationship_codes = {
+        item.get("code")
+        for item in relationships
+    }
+
+    if (
+        asset_name in high_variation_assets
+        and "high_variation_asset_escape_tension"
+        in relationship_codes
+    ):
+        score -= 10
+        cautions.append(
+            "Herby เคยตรวจพบแรงดึงระหว่าง "
+            "ความสนใจในสินทรัพย์ผันผวนสูงกับแนวโน้มขายเมื่อขาดทุน"
+        )
+
+    if (
+        asset_name == "Bitcoin"
+        and "emerging_speculative"
+        in relationship_codes
+    ):
+        score -= 8
+        cautions.append(
+            "ประสบการณ์กับสินทรัพย์เก็งกำไรของคุณ "
+            "อาจยังมีจำกัด"
+        )
+
+    if (
+        asset_name in safety_assets
+        and "growth_safety_tension"
+        in relationship_codes
+    ):
+        cautions.append(
+            "สินทรัพย์นี้ช่วยด้านความมั่นคง "
+            "แต่ควรพิจารณาบทบาทร่วมกับเป้าหมายการเติบโต"
+        )
+
+    score = max(
+        0,
+        min(100, round(score)),
+    )
+
+    if score >= 85:
+        label = "สอดคล้องสูงมาก"
+    elif score >= 70:
+        label = "สอดคล้อง"
+    elif score >= 55:
+        label = "สอดคล้องแบบมีเงื่อนไข"
+    elif score >= 40:
+        label = "ควรพิจารณาด้วยความระมัดระวัง"
+    else:
+        label = "สอดคล้องค่อนข้างต่ำ"
+
+    return {
+        "asset_name": asset_name,
+        "icon": asset_profile["icon"],
+        "score": score,
+        "label": label,
+        "portfolio_role": asset_profile["portfolio_role"],
+        "alignments": alignments,
+        "cautions": cautions,
+        "strengths": asset_profile["strengths"],
+        "weaknesses": asset_profile["weaknesses"],
+        "general_cautions": asset_profile["general_cautions"],
+    }
+
 
 def render_guide_me():
 
