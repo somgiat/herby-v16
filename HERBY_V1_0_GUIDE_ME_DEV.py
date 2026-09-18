@@ -1356,6 +1356,86 @@ def get_growth_desire_display(value):
 
     return mapping.get(value, value or "-")
 
+def get_profile_numeric_levels(result):
+
+    answers = result.get("answers") or {}
+    mindsets = result.get("mindsets") or {}
+
+    risk_mapping = {
+        "low": 1,
+        "medium": 3,
+        "high": 5,
+    }
+
+    behavior_mapping = {
+        "escape": 1,
+        "reduce": 2,
+        "endure": 3,
+        "accept": 4,
+        "actively_add": 5,
+    }
+
+    timeline_mapping = {
+        "น้อยกว่า 3 ปี": 1,
+        "3-5 ปี": 2,
+        "5-10 ปี": 3,
+        "10-20 ปี": 4,
+        "มากกว่า 20 ปี": 5,
+    }
+
+    experience_mapping = {
+        "ยังไม่เคยลงทุน": 1,
+        "น้อยกว่า 1 ปี": 1,
+        "1-3 ปี": 2,
+        "3-10 ปี": 3,
+        "มากกว่า 10 ปี": 4,
+    }
+
+    growth_desire = (
+        mindsets.get("growth_desire")
+        or {}
+    )
+
+    growth_mapping = {
+        "low": 1,
+        "medium": 3,
+        "high": 5,
+    }
+
+    safety_mapping = {
+        "low": 1,
+        "medium": 3,
+        "high": 5,
+    }
+
+    return {
+        "risk": risk_mapping.get(
+            mindsets.get("risk_tolerance"),
+            3,
+        ),
+        "behavior": behavior_mapping.get(
+            mindsets.get("stress_behavior"),
+            3,
+        ),
+        "timeline": timeline_mapping.get(
+            answers.get("timeline"),
+            3,
+        ),
+        "experience": experience_mapping.get(
+            answers.get("experience"),
+            1,
+        ),
+        "growth": growth_mapping.get(
+            growth_desire.get("level"),
+            3,
+        ),
+        "safety": safety_mapping.get(
+            mindsets.get("safety_need"),
+            3,
+        ),
+    }
+
+
 def render_guide_me():
 
     profile = get_current_profile()
