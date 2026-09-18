@@ -1544,12 +1544,10 @@ def render_admin_dashboard():
             use_container_width=True,
         ):
             go_to("admin_analytics")
-         st.divider()
-
+        
+        st.divider()
         if st.button(
-            "🚪 Logout Admin",
-            use_container_width=True,
-        ):
+            "🚪 Logout Admin",use_container_width=True,):
             admin_logout()
    
 
