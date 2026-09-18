@@ -802,6 +802,7 @@ def initialize_session_state():
         "admin_logged_in": False,
         "selected_admin_profile_id": None,
         "selected_admin_nickname": None,
+        "guide_me_selected_asset": None,
     }
     for key, value in defaults.items():
         if key not in st.session_state:
