@@ -1983,7 +1983,8 @@ def render_admin_analytics():
 
     try:
 
-        analytics = get_admin_analytics()
+        analytics = safe_admin_data(get_admin_analytics)
+        if not analytics: return
 
         st.caption(
             "Mindset ใช้ผลประเมินล่าสุดของผู้ใช้แต่ละคน "
