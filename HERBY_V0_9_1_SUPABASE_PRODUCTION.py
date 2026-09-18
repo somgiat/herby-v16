@@ -1707,9 +1707,11 @@ def render_admin_user_detail():
 
     try:
 
-        assessments = get_admin_user_assessments(
-            profile_id
+        assessments = safe_admin_data(
+            lambda:get_admin_user_assessments(profile_id)
         )
+        if assessments is None: return
+                                      
 
         st.metric(
             "📝 จำนวนการประเมินทั้งหมด",
