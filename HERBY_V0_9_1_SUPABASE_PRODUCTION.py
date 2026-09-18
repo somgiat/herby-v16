@@ -1550,7 +1550,7 @@ def render_admin_dashboard():
             "🚪 Logout Admin",
             use_container_width=True,
         ):
-            admin_logout()
+        admin_logout()
    
 
 def render_admin_users():
