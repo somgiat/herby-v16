@@ -1186,7 +1186,7 @@ def render_guide_me():
 
     if not latest:
 
-        st.title("ℹ️ Guide Me")
+        st.title("📣 Guide Me")
 
         st.info(
             "Herby ต้องรู้จักคุณก่อน "
@@ -1225,7 +1225,7 @@ def render_guide_me():
         answers.get("name", "คุณ"),
     )
 
-    st.title("ℹ️ Guide Me")
+    st.title("📣 Guide Me")
     st.subheader("Herby แนะนำ")
 
     st.info(
@@ -1440,7 +1440,7 @@ def render_dashboard():
         st.divider()
 
         if st.button(
-            "ℹ️ Guide Me — Herby แนะนำ",
+            "📣 Guide Me — Herby แนะนำ",
             type="primary",
             use_container_width=True,
         ):
