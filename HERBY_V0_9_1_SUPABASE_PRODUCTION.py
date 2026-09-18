@@ -1090,7 +1090,7 @@ def render_admin_login():
     )
     
     if st.button("Login"):
-        if password == "herbyadmin":
+        if password == get_admin_password():
             st.session_state.admin_logged_in = True
             go_to("admin_dashboard")
         else:
