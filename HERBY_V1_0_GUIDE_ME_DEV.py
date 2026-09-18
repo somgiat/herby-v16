@@ -1050,6 +1050,64 @@ def render_result_snapshot(result):
     st.subheader(result.get("style", {}).get("name", "-"))
     st.write(result.get("style", {}).get("description", ""))
 
+def get_risk_display(value):
+
+    mapping = {
+        "low": "ต่ำ",
+        "medium": "ปานกลาง",
+        "high": "สูง",
+    }
+
+    return mapping.get(value, value or "-")
+
+
+def get_behavior_display(value):
+
+    mapping = {
+        "escape": "ขายออกทั้งหมดทันที",
+        "reduce": "ขายบางส่วนเพื่อลดความเสี่ยง",
+        "endure": "ถือต่อ แม้จะรู้สึกไม่สบายใจ",
+        "accept": "ถือไว้ เพราะมองว่าเป็นความผันผวนตามปกติ",
+        "actively_add": "พิจารณาซื้อเพิ่มเมื่อมองว่าเป็นโอกาส",
+    }
+
+    return mapping.get(value, value or "-")
+
+
+def get_learning_stage_display(value):
+
+    mapping = {
+        "emerging": "กำลังเริ่มสำรวจ",
+        "developing": "กำลังพัฒนา",
+        "experienced": "มีประสบการณ์",
+        "seasoned": "มีประสบการณ์สูง",
+    }
+
+    return mapping.get(value, value or "-")
+
+
+def get_safety_need_display(value):
+
+    mapping = {
+        "low": "ต่ำ",
+        "medium": "ปานกลาง",
+        "high": "สูง",
+    }
+
+    return mapping.get(value, value or "-")
+
+
+def get_growth_desire_display(value):
+
+    mapping = {
+        "low": "ต่ำ",
+        "medium": "ปานกลาง",
+        "high": "สูง",
+    }
+
+    return mapping.get(value, value or "-")
+
+
 def render_dashboard():
     profile = get_current_profile()
     if not profile:
