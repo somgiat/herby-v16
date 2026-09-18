@@ -1437,6 +1437,16 @@ def render_dashboard():
         st.markdown(f"**📅 ประเมินล่าสุด:** {assessed}")
         st.markdown(f"**📈 สไตล์ล่าสุด:** {result['style']['name']}")
         st.markdown(f"**🌱 Learning Stage:** {result['mindsets']['learning_stage']}")
+        st.divider()
+
+        if st.button(
+            "💚 Guide Me — Herby แนะนำ",
+            type="primary",
+            use_container_width=True,
+        ):
+            st.session_state.guide_me_selected_asset = None
+            go_to("guide_me")
+
         if st.button("💚 ทบทวนโปรไฟล์ของฉัน", use_container_width=True):
             st.session_state.review_result = result
             go_to("review")
