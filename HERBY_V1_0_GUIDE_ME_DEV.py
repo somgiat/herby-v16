@@ -2040,7 +2040,7 @@ def render_guide_me():
                         f"• {interpretation}"
                     )
 
-st.divider()
+    st.divider()
     st.header("🧭 สินทรัพย์ที่ Herby แนะนำให้พิจารณา")
 
     st.info(
