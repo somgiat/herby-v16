@@ -1,5 +1,5 @@
 # Create V1.0 Guide Me development baseline
-# Streamlit application - full file for copy/paste
+# V1.0 Sprint 1 - Guide Me foundation
 
 import streamlit as st
 import pandas as pd
