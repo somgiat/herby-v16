@@ -1581,7 +1581,8 @@ def render_admin_users():
 
     try:
 
-        users = get_admin_users()
+        users = safe_admin_data(get_admin_users)
+        if users is None: return
 
         search_text = st.text_input(
             "🔍 ค้นหาผู้ใช้ด้วย Nickname",
