@@ -1688,6 +1688,30 @@ def score_asset_suitability(
         "general_cautions": asset_profile["general_cautions"],
     }
 
+def build_asset_suitability_results(result):
+
+    suitability_results = []
+
+    for asset_name, asset_profile in (
+        GUIDE_ME_ASSET_PROFILES.items()
+    ):
+
+        suitability = score_asset_suitability(
+            asset_name,
+            asset_profile,
+            result,
+        )
+
+        suitability_results.append(
+            suitability
+        )
+
+    return sorted(
+        suitability_results,
+        key=lambda item: item["score"],
+        reverse=True,
+    )
+
 
 def render_guide_me():
 
