@@ -1164,6 +1164,264 @@ def get_growth_desire_display(value):
 
     return mapping.get(value, value or "-")
 
+def render_guide_me():
+
+    profile = get_current_profile()
+
+    if not profile:
+        st.warning(
+            "Herby ยังไม่พบโปรไฟล์ของคุณ "
+            "กรุณาเข้าสู่ระบบอีกครั้ง"
+        )
+
+        if st.button(
+            "⬅️ กลับหน้าแรก",
+            use_container_width=True,
+        ):
+            go_to("home")
+
+        return
+
+    latest = profile.get("latest_assessment")
+
+    if not latest:
+
+        st.title("💚 Guide Me")
+
+        st.info(
+            "Herby ต้องรู้จักคุณก่อน "
+            "จึงจะสามารถนำเสนอสินทรัพย์ที่สอดคล้องกับคุณได้"
+        )
+
+        if st.button(
+            "📝 เริ่มทำแบบประเมิน",
+            type="primary",
+            use_container_width=True,
+        ):
+            go_to("questionnaire")
+
+        if st.button(
+            "⬅️ กลับ Dashboard",
+            use_container_width=True,
+        ):
+            go_to("dashboard")
+
+        return
+
+    result = latest.get("result") or {}
+    answers = result.get("answers") or {}
+    mindsets = result.get("mindsets") or {}
+    style = result.get("style") or {}
+    relationships = result.get("relationships") or []
+    observations = result.get("observations") or []
+
+    growth_desire = (
+        mindsets.get("growth_desire")
+        or {}
+    )
+
+    nickname = profile.get(
+        "nickname",
+        answers.get("name", "คุณ"),
+    )
+
+    st.title("💚 Guide Me")
+    st.subheader("Herby แนะนำ")
+
+    st.info(
+        f"จากสิ่งที่ Herby ได้เรียนรู้เกี่ยวกับคุณ {nickname} "
+        "Herby จะช่วยนำเสนอสินทรัพย์ที่อาจสอดคล้องกับ "
+        "เป้าหมาย ระยะเวลา ระดับความเสี่ยง "
+        "และพฤติกรรมการลงทุนของคุณ"
+    )
+
+    st.caption(
+        "Herby จะอธิบายทั้งสิ่งที่สอดคล้อง "
+        "จุดแข็ง จุดอ่อน และข้อควรระวัง "
+        "โดยการตัดสินใจสุดท้ายยังเป็นของคุณเสมอ"
+    )
+
+    if st.button(
+        "⬅️ กลับ Dashboard",
+        use_container_width=True,
+    ):
+        go_to("dashboard")
+
+    st.divider()
+    st.header("👤 Herby รู้จักคุณอย่างไร")
+
+    st.subheader(
+        style.get(
+            "name",
+            "ยังไม่พบข้อมูลสไตล์",
+        )
+    )
+
+    style_description = style.get("description")
+
+    if style_description:
+        st.write(style_description)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        st.write(
+            f"**🎯 เป้าหมายหลัก**  \n"
+            f"{answers.get('goal', '-')}"
+        )
+
+        st.write(
+            f"**⏳ ระยะเวลาลงทุน**  \n"
+            f"{answers.get('timeline', '-')}"
+        )
+
+        st.write(
+            f"**🌱 ประสบการณ์**  \n"
+            f"{answers.get('experience', '-')}"
+        )
+
+        st.write(
+            f"**📚 Learning Stage**  \n"
+            f"{get_learning_stage_display(
+                mindsets.get('learning_stage')
+            )}"
+        )
+
+    with col2:
+
+        st.write(
+            f"**🎯 การยอมรับความเสี่ยง**  \n"
+            f"{get_risk_display(
+                mindsets.get('risk_tolerance')
+            )}"
+        )
+
+        st.write(
+            f"**⚡ พฤติกรรมเมื่อขาดทุน**  \n"
+            f"{get_behavior_display(
+                mindsets.get('stress_behavior')
+            )}"
+        )
+
+        st.write(
+            f"**🛡️ ความต้องการความมั่นคง**  \n"
+            f"{get_safety_need_display(
+                mindsets.get('safety_need')
+            )}"
+        )
+
+        st.write(
+            f"**📈 ความต้องการการเติบโต**  \n"
+            f"{get_growth_desire_display(
+                growth_desire.get('level')
+            )}"
+        )
+
+    interested_assets = (
+        answers.get("assets")
+        or []
+    )
+
+    st.markdown("### 💼 สินทรัพย์ที่คุณเคยระบุว่าสนใจ")
+
+    if interested_assets:
+
+        st.write(
+            " • ".join(interested_assets)
+        )
+
+    else:
+
+        st.caption(
+            "คุณยังไม่ได้ระบุสินทรัพย์ที่สนใจ"
+        )
+
+    assessed_at = latest.get(
+        "assessed_at",
+        "",
+    )
+
+    if assessed_at:
+
+        assessed_display = (
+            assessed_at
+            .replace("T", " ")
+            [:16]
+        )
+
+        st.caption(
+            f"อ้างอิงผลประเมินล่าสุด: "
+            f"{assessed_display}"
+        )
+
+    st.divider()
+    st.header("🌟 สิ่งที่ Herby เรียนรู้เกี่ยวกับคุณ")
+
+    insight = result.get("insight")
+
+    if insight:
+
+        st.info(insight)
+
+    else:
+
+        st.caption(
+            "ยังไม่มีข้อมูล Insight "
+            "จากผลประเมินล่าสุด"
+        )
+
+    st.divider()
+    st.header("🔎 สิ่งที่ Herby สังเกตเห็น")
+
+    if observations:
+
+        for observation in observations:
+            st.warning(observation)
+
+    else:
+
+        st.success(
+            "Herby ยังไม่พบแรงดึงหรือความขัดแย้งสำคัญ "
+            "จากคำตอบชุดล่าสุดของคุณ"
+        )
+
+    important_relationships = [
+        relationship
+        for relationship in relationships
+        if relationship.get("priority", 0) >= 2
+    ]
+
+    if important_relationships:
+
+        with st.expander(
+            "🧭 ดูความสัมพันธ์สำคัญที่ Herby ตรวจพบ"
+        ):
+
+            for relationship in important_relationships:
+
+                interpretation = relationship.get(
+                    "interpretation"
+                )
+
+                if interpretation:
+                    st.write(
+                        f"• {interpretation}"
+                    )
+
+    st.divider()
+    st.header("🧩 ขั้นตอนต่อไป")
+
+    st.success(
+        "ข้อมูลด้านบนจะเป็นฐานให้ Herby "
+        "ประเมินว่าสินทรัพย์ประเภทใด "
+        "สอดคล้องกับคุณมากน้อยเพียงใด"
+    )
+
+    st.caption(
+        "Asset Suitability จะถูกเพิ่มใน Sprint ถัดไป"
+    )
+
 
 def render_dashboard():
     profile = get_current_profile()
