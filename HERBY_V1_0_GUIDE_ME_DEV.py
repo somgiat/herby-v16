@@ -1790,7 +1790,6 @@ if asset_name in preferred_assets:
         label = "ควรพิจารณาด้วยความระมัดระวัง"
     else:
         label = "สอดคล้องค่อนข้างต่ำ"
-
     return {
         "asset_name": asset_name,
         "icon": asset_profile["icon"],
