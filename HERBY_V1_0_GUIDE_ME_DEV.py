@@ -959,6 +959,40 @@ def save_assessment(result):
     supabase_request("POST", ASSESSMENTS_TABLE, payload=payload, prefer="return=minimal")
     return True
 
+def save_guide_me_feedback(feedback_data):
+
+    try:
+
+        profile_id = (
+            st.session_state.current_profile_id
+        )
+
+        if not profile_id:
+            return False
+
+        payload = {
+            "profile_id": profile_id,
+            "style_name": "GUIDE_ME_FEEDBACK",
+            "learning_stage": "",
+            "result_json": {
+                "feedback_type": "guide_me",
+                "feedback": feedback_data,
+            },
+        }
+
+        supabase_request(
+            "POST",
+            ASSESSMENTS_TABLE,
+            payload=payload,
+            prefer="return=minimal",
+        )
+
+        return True
+
+    except Exception:
+
+        return False
+
 
 def database_health_check():
     supabase_request("GET", PROFILES_TABLE, params={"select": "id", "limit": "1"})
@@ -995,6 +1029,7 @@ def initialize_session_state():
         "selected_admin_profile_id": None,
         "selected_admin_nickname": None,
         "guide_me_selected_asset": None,
+        "guide_me_feedback_submitted": False,
     }
     for key, value in defaults.items():
         if key not in st.session_state:
@@ -2096,6 +2131,34 @@ def render_guide_me():
         "ราคา มูลค่า ข่าว หรือจังหวะเข้าซื้อ"
     )
 
+    st.divider()
+
+    st.header("🧪 Guide Me Closed Alpha")
+
+    st.info(
+        "ผลลัพธ์นี้ประเมินความสอดคล้องระหว่าง "
+        "ประเภทสินทรัพย์กับข้อมูลจากแบบประเมินล่าสุดของคุณ"
+    )
+
+    st.caption(
+        "Herby ยังไม่ได้วิเคราะห์หุ้นรายตัว "
+        "ราคา มูลค่า ข่าว หรือจังหวะเข้าซื้อ "
+        "ผลลัพธ์นี้ไม่ใช่คำสั่งซื้อขาย"
+    )
+    st.divider()
+
+    st.header("🧪 Guide Me Closed Alpha")
+
+    st.info(
+        "ผลลัพธ์นี้ประเมินความสอดคล้องระหว่าง "
+        "ประเภทสินทรัพย์กับข้อมูลจากแบบประเมินล่าสุดของคุณ"
+    )
+
+    st.caption(
+        "Herby ยังไม่ได้วิเคราะห์หุ้นรายตัว "
+        "ราคา มูลค่า ข่าว หรือจังหวะเข้าซื้อ "
+        "ผลลัพธ์นี้ไม่ใช่คำสั่งซื้อขาย"
+    )
 
 
 def render_dashboard():
