@@ -2171,7 +2171,7 @@ def render_guide_me():
         "💬 มีอะไรที่ Herby "
         "เข้าใจคุณคลาดเคลื่อนหรือไม่?"
     )
-    if not st.session_state.guide_me_feedback_submitted:
+if not st.session_state.guide_me_feedback_submitted:
 
     if st.button(
         "📨 ส่ง Feedback ให้ Herby",
