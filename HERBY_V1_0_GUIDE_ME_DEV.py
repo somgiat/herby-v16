@@ -1791,18 +1791,18 @@ if asset_name in preferred_assets:
     else:
         label = "สอดคล้องค่อนข้างต่ำ"
 
-    return {
-        "asset_name": asset_name,
-        "icon": asset_profile["icon"],
-        "score": score,
-        "label": label,
-        "portfolio_role": asset_profile["portfolio_role"],
-        "alignments": alignments,
-        "cautions": cautions,
-        "strengths": asset_profile["strengths"],
-        "weaknesses": asset_profile["weaknesses"],
-        "general_cautions": asset_profile["general_cautions"],
-    }
+        return {
+            "asset_name": asset_name,
+            "icon": asset_profile["icon"],
+            "score": score,
+            "label": label,
+            "portfolio_role": asset_profile["portfolio_role"],
+            "alignments": alignments,
+            "cautions": cautions,
+            "strengths": asset_profile["strengths"],
+            "weaknesses": asset_profile["weaknesses"],
+            "general_cautions": asset_profile["general_cautions"],
+        }
 
 def build_asset_suitability_results(result):
 
