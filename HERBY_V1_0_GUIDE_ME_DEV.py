@@ -2153,6 +2153,65 @@ def render_guide_me():
         "ผลลัพธ์นี้ไม่ใช่คำสั่งซื้อขาย"
     )
 
+    guide_feedback_fit = st.radio(
+    "📣 สินทรัพย์ที่ Herby นำเสนอ "
+    "สอดคล้องกับตัวคุณแค่ไหน?",
+    [
+        "👍 สอดคล้องมาก",
+        "🙂 ค่อนข้างสอดคล้อง",
+        "😕 ยังไม่ค่อยสอดคล้อง",
+        "👎 ไม่สอดคล้อง",
+    ],
+)
+guide_feedback_ranking = st.text_area(
+    "🧭 มีสินทรัพย์ใดที่คุณคิดว่า "
+    "อันดับสูงหรือต่ำเกินไปหรือไม่?"
+)
+guide_feedback_understanding = st.text_area(
+    "💬 มีอะไรที่ Herby "
+    "เข้าใจคุณคลาดเคลื่อนหรือไม่?"
+)
+if not st.session_state.guide_me_feedback_submitted:
+
+    if st.button(
+        "📨 ส่ง Feedback ให้ Herby",
+        type="primary",
+        use_container_width=True,
+    ):
+
+        saved = save_guide_me_feedback(
+            {
+                "fit": guide_feedback_fit,
+                "ranking_comment": (
+                    guide_feedback_ranking
+                ),
+                "understanding_comment": (
+                    guide_feedback_understanding
+                ),
+            }
+        )
+
+        if saved:
+
+            st.session_state.guide_me_feedback_submitted = True
+
+            st.success(
+                "✅ Herby ได้รับ Feedback แล้ว"
+            )
+
+            st.rerun()
+
+        else:
+
+            st.error(
+                "ไม่สามารถบันทึก Feedback ได้"
+            )
+else:
+
+    st.success(
+        "✅ คุณส่ง Feedback ให้ Herby แล้ว"
+    )
+
 
 def render_dashboard():
     profile = get_current_profile()
