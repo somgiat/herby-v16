@@ -277,6 +277,51 @@ GUIDE_ME_ASSET_PROFILES = {
     },
 }
 
+STYLE_ASSET_MAPPING = {
+
+    "🛡️ ผู้รักษาความมั่นคง": [
+        "เงินฝาก",
+        "พันธบัตร / ตราสารหนี้",
+        "ทองคำ",
+        "กองทุนผสม",
+    ],
+
+    "⚖️ ผู้แสวงหาสมดุล": [
+        "กองทุนผสม",
+        "ETF หุ้น",
+        "REIT",
+        "ทองคำ",
+    ],
+
+    "📈 ผู้สร้างการเติบโตอย่างมีวินัย": [
+        "ETF หุ้น",
+        "หุ้นต่างประเทศ",
+        "หุ้นไทย",
+        "REIT",
+    ],
+
+    "🚀 ผู้เปิดรับโอกาส": [
+        "ETF หุ้น",
+        "หุ้นต่างประเทศ",
+        "Bitcoin",
+        "หุ้นไทย",
+    ],
+
+    "🧭 ผู้กำลังค้นหาจุดสมดุล": [
+        "ETF หุ้น",
+        "กองทุนผสม",
+        "หุ้นต่างประเทศ",
+        "ทองคำ",
+    ],
+
+    "🌱 ผู้เริ่มสำรวจโลกการลงทุน": [
+        "กองทุนผสม",
+        "ETF หุ้น",
+        "เงินฝาก",
+        "ทองคำ",
+    ],
+}
+
 
 # ============================================================
 # SESSION STATE
@@ -1491,6 +1536,41 @@ def score_asset_suitability(
     score = 50
     alignments = []
     cautions = []
+    style_name = (
+    result.get("style", {})
+    .get("name", "")
+)
+
+preferred_assets = (
+    STYLE_ASSET_MAPPING.get(
+        style_name,
+        []
+    )
+)
+
+if asset_name in preferred_assets:
+
+    position = (
+        preferred_assets.index(asset_name)
+    )
+
+    ranking_bonus = {
+        0: 12,
+        1: 9,
+        2: 6,
+        3: 3,
+    }
+
+    score += ranking_bonus.get(
+        position,
+        0,
+    )
+
+    alignments.append(
+        f"สินทรัพย์นี้อยู่ในกลุ่มที่ "
+        f"Herby มองว่าสอดคล้องกับสไตล์ "
+        f"{style_name}"
+    )
 
     risk_difference = abs(
         levels["risk"] - asset_risk
