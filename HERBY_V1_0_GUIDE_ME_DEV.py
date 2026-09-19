@@ -1647,6 +1647,31 @@ def render_asset_suitability_card(
                 f"**บทบาทที่อาจเหมาะสม**  \n"
                 f"{suitability['portfolio_role']}"
             )
+portfolio_role = suitability[
+    "portfolio_role"
+]
+
+if portfolio_role == "Satellite Opportunity Portfolio":
+
+    st.warning(
+        "⚠️ แม้สินทรัพย์ประเภทนี้จะสอดคล้องกับ "
+        "โปรไฟล์ของคุณในหลายด้าน "
+        "Herby มองว่าสินทรัพย์ประเภทนี้ "
+        "เหมาะเป็นพอร์ตเสริมมากกว่าพอร์ตหลัก "
+        "เนื่องจากความผันผวนสูง "
+        "และการลดลงของมูลค่าอาจรุนแรง"
+    )
+
+elif portfolio_role in [
+    "Core Growth Portfolio",
+    "Core Global Growth Portfolio",
+]:
+
+    st.success(
+        "✅ สินทรัพย์ประเภทนี้สามารถเป็น "
+        "หนึ่งในองค์ประกอบหลักของพอร์ตระยะยาวได้ "
+        "หากสอดคล้องกับเป้าหมายและระดับความเสี่ยงของคุณ"
+    )
 
         st.progress(score / 100)
 
