@@ -1791,7 +1791,7 @@ if asset_name in preferred_assets:
     else:
         label = "สอดคล้องค่อนข้างต่ำ"
 
-    return {   # ✅ ต้องเยื้องเข้ามา
+    return {
         "asset_name": asset_name,
         "icon": asset_profile["icon"],
         "score": score,
