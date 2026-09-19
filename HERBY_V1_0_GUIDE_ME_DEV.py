@@ -916,6 +916,7 @@ def get_assessments(profile_id):
         params={
             "select": "id,profile_id,assessment_date,style_name,learning_stage,result_json",
             "profile_id": f"eq.{profile_id}",
+            "style_name": "neq.GUIDE_ME_FEEDBACK",
             "order": "assessment_date.desc",
         },
     ) or []
