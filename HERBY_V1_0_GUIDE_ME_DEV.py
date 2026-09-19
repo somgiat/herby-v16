@@ -2147,7 +2147,6 @@ def render_guide_me():
     )
     st.divider()
 
-    st.header("🧪 Guide Me Closed Alpha")
 
     st.info(
         "ผลลัพธ์นี้ประเมินความสอดคล้องระหว่าง "
