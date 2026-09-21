@@ -1703,6 +1703,19 @@ def render_asset_suitability_card(
                 )
 
         st.progress(score / 100)
+        
+        if st.button(
+            f"🔎 ดูรายละเอียด {asset_name}",
+            key=f"detail_{asset_name}",
+            use_container_width=True,
+        ):
+
+    st.session_state.guide_me_selected_asset = (
+        suitability
+    )
+
+        go_to("asset_detail")
+
 
         with st.expander(
             "🔎 ดูเหตุผล จุดแข็ง จุดอ่อน และข้อควรระวัง"
