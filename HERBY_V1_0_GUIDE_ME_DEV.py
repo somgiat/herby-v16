@@ -1710,9 +1710,9 @@ def render_asset_suitability_card(
             use_container_width=True,
         ):
 
-    st.session_state.guide_me_selected_asset = (
-        suitability
-    )
+            st.session_state.guide_me_selected_asset = (
+                suitability
+            )
 
         go_to("asset_detail")
 
