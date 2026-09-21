@@ -1713,7 +1713,9 @@ def render_asset_suitability_card(
             st.session_state.guide_me_selected_asset = (
                 suitability
             )
-
+            st.writer(
+                st.session_state.guide_me_selected_asset)
+            
         go_to("asset_detail")
 
 
@@ -1767,6 +1769,9 @@ def render_asset_detail():
             "guide_me_selected_asset"
         )
     )
+    st.write("DEBUG", 
+             suitability
+            )
 
     if not suitability:
 
