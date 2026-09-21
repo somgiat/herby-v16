@@ -1747,6 +1747,170 @@ def render_asset_suitability_card(
             for item in dict.fromkeys(all_cautions):
                 st.write(f"• {item}")
 
+def render_asset_detail():
+
+    suitability = (
+        st.session_state.get(
+            "guide_me_selected_asset"
+        )
+    )
+
+    if not suitability:
+
+        st.warning(
+            "ไม่พบข้อมูลสินทรัพย์"
+        )
+
+        if st.button(
+            "⬅️ กลับ Guide Me",
+            use_container_width=True,
+        ):
+            go_to("guide_me")
+
+        return
+
+    st.title(
+        f"{suitability['icon']} "
+        f"{suitability['asset_name']}"
+    )
+
+    st.caption(
+        "รายละเอียดสินทรัพย์ที่ Herby "
+        "มองว่าสอดคล้องกับคุณ"
+    )
+
+    if st.button(
+        "⬅️ กลับ Guide Me",
+        use_container_width=True,
+    ):
+        go_to("guide_me")
+
+    st.divider()
+
+    st.header("📌 บทบาทในพอร์ต")
+
+    st.info(
+        suitability["portfolio_role"]
+    )
+
+    role = suitability[
+        "portfolio_role"
+    ]
+
+    if "ส่วนเสริม" in role:
+
+        st.warning(
+            "⚠️ แม้สินทรัพย์ประเภทนี้จะสอดคล้องกับ "
+            "โปรไฟล์ของคุณในหลายด้าน\n\n"
+            "Herby มองว่าสินทรัพย์ประเภทนี้ "
+            "เหมาะเป็นพอร์ตเสริมมากกว่าพอร์ตหลัก\n\n"
+            "เนื่องจากความผันผวนสูง "
+            "และการลดลงของมูลค่าอาจรุนแรง"
+        )
+
+    st.divider()
+
+    st.header("✅ ทำไม Herby ถึงแนะนำ")
+
+    for item in suitability["alignments"]:
+
+        st.write(f"• {item}")
+
+    st.divider()
+
+    st.header("📈 จุดแข็ง")
+
+    for item in suitability["strengths"]:
+
+        st.success(item)
+
+    st.divider()
+
+    st.header("📉 จุดอ่อน")
+
+    for item in suitability["weaknesses"]:
+
+        st.error(item)
+
+    st.divider()
+
+    st.header("⚠️ ข้อควรระวัง")
+
+    all_cautions = (
+        suitability["cautions"]
+        + suitability["general_cautions"]
+    )
+
+    for item in dict.fromkeys(
+        all_cautions
+    ):
+
+        st.warning(item)
+
+    st.divider()
+
+    st.header("💬 Herby Reflection")
+
+    asset_name = suitability[
+        "asset_name"
+    ]
+
+    reflection_map = {
+
+        "Bitcoin":
+        (
+            "หาก Bitcoin ลดลง 50% "
+            "คุณยังเชื่อในเหตุผลเดิม "
+            "ที่ทำให้คุณสนใจสินทรัพย์นี้อยู่หรือไม่?"
+        ),
+
+        "ETF หุ้น":
+        (
+            "คุณกำลังมองหา "
+            "ความมั่งคั่งระยะยาว "
+            "หรือกำลังมองหาผลตอบแทนระยะสั้น?"
+        ),
+
+        "หุ้นต่างประเทศ":
+        (
+            "หากตลาดโลกผันผวนต่อเนื่อง "
+            "คุณยังสามารถถือสินทรัพย์นี้ "
+            "ได้ตามแผนเดิมหรือไม่?"
+        ),
+
+        "ทองคำ":
+        (
+            "คุณเลือกทองคำ "
+            "เพื่อกระจายความเสี่ยง "
+            "หรือเพื่อหวังผลตอบแทน?"
+        ),
+
+    }
+
+    reflection = reflection_map.get(
+        asset_name,
+        (
+            "สินทรัพย์นี้มีบทบาทอย่างไร "
+            "ต่อเป้าหมายทางการเงินของคุณ?"
+        )
+    )
+
+    st.info(reflection)
+
+    st.divider()
+
+    st.button(
+        "✅ ฉันสนใจสินทรัพย์นี้",
+        use_container_width=True,
+        disabled=True,
+    )
+
+    st.caption(
+        "ปุ่มนี้จะเชื่อมกับ "
+        "Portfolio Setup "
+        "ใน Sprint ถัดไป"
+    )
+
 
 def render_guide_me():
 
