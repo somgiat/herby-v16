@@ -1714,7 +1714,7 @@ def render_asset_suitability_card(
                 asset_name
             )
         
-        go_to("asset_detail")
+            go_to("asset_detail")
 
 
         with st.expander(
