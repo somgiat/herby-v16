@@ -1711,11 +1711,9 @@ def render_asset_suitability_card(
         ):
 
             st.session_state.guide_me_selected_asset = (
-                suitability
+                asset_name
             )
-            st.writer(
-                st.session_state.guide_me_selected_asset)
-            
+        
         go_to("asset_detail")
 
 
@@ -1764,15 +1762,58 @@ def render_asset_suitability_card(
 
 def render_asset_detail():
 
-    suitability = (
+    asset_name = (
         st.session_state.get(
             "guide_me_selected_asset"
         )
-    )
-    st.write("DEBUG", 
-             suitability
-            )
+    )    
 
+    if not asset_name:
+
+        st.warning(
+            "ไม่พบข้อมูลสินทรัพย์"
+        )
+
+        if st.button(
+            "⬅️ กลับ Guide Me",
+            use_container_width=True,
+        ):
+            go_to("guide_me")
+
+        return
+
+    profile = get_current_profile()
+
+    latest = (
+        profile.get(
+            "latest_assessment"
+        )
+    )
+
+    result = latest.get(
+        "result",
+        {},
+    )
+
+    suitability_results = (
+        build_asset_suitability_results(
+            result
+        )
+    )
+
+    suitability = None
+
+    for item in suitability_results:
+
+        if (
+            item["asset_name"]
+            == asset_name
+        ):
+            suitability = item
+            break
+
+
+    
     if not suitability:
 
         st.warning(
