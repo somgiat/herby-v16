@@ -2089,6 +2089,24 @@ def render_asset_detail():
     ):
 
         st.warning(item)
+    
+    st.divider()
+
+    st.header(
+        "💡 สิ่งที่ Herby อยากให้คุณพิจารณา"    
+    )
+
+    contextual_insight = (
+        get_contextual_insight(
+            style_name,
+            suitability["asset_name"],
+            result,
+        )
+    )
+
+    st.info(
+        contextual_insight
+    )
 
     st.divider()
 
