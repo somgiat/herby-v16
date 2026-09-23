@@ -1850,7 +1850,15 @@ def render_asset_detail():
         "result",
         {},
     )
-
+    style_name = (
+        result.get(
+            "style",
+            {}
+        ).get(
+            "name",
+            ""
+        )
+    )
     suitability_results = (
         build_asset_suitability_results(
             result
