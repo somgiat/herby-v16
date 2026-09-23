@@ -1922,18 +1922,18 @@ def render_asset_detail():
 
     if "ส่วนเสริม" in role:
 
-    personalized_warning = (
-        get_personalized_warning(
-            style_name,
-            suitability["asset_name"],
+        personalized_warning = (
+            get_personalized_warning(
+                style_name,
+                suitability["asset_name"],
+            )
         )
-    )
 
-    if personalized_warning:
+        if personalized_warning:
 
-        st.warning(
-            personalized_warning
-        )
+            st.warning(
+                personalized_warning
+            )
 
     st.divider()
 
