@@ -1922,13 +1922,17 @@ def render_asset_detail():
 
     if "ส่วนเสริม" in role:
 
+    personalized_warning = (
+        get_personalized_warning(
+            style_name,
+            suitability["asset_name"],
+        )
+    )
+
+    if personalized_warning:
+
         st.warning(
-            "⚠️ แม้สินทรัพย์ประเภทนี้จะสอดคล้องกับ "
-            "โปรไฟล์ของคุณในหลายด้าน\n\n"
-            "Herby มองว่าสินทรัพย์ประเภทนี้ "
-            "เหมาะเป็นพอร์ตเสริมมากกว่าพอร์ตหลัก\n\n"
-            "เนื่องจากความผันผวนสูง "
-            "และการลดลงของมูลค่าอาจรุนแรง"
+            personalized_warning
         )
 
     st.divider()
