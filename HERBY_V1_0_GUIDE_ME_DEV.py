@@ -2160,8 +2160,8 @@ def render_asset_detail():
         "💡 สิ่งที่ Herby อยากให้คุณพิจารณา"    
     )
 
-    contextual_insight = (
-        get_contextual_insight(
+    contextual_insights = (
+        get_contextual_insights(
             style_name,
             suitability["asset_name"],
             result,
@@ -2169,7 +2169,7 @@ def render_asset_detail():
     )
 
     st.info(
-        contextual_insight
+        contextual_insights
     )
 
     st.divider()
