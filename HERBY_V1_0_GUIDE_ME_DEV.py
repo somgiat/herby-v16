@@ -1857,7 +1857,7 @@ def get_contextual_insights(
         ]
     ):
 
-        return (
+        insights.append (
             "💡 Herby สังเกตว่า "
             "คุณอยู่ในช่วงใกล้เกษียณ\n\n"
 
@@ -1875,7 +1875,7 @@ def get_contextual_insights(
             "เกษียณ" in goal
         ):
 
-            return (
+            insights.append (
                 "💡 คุณมีเป้าหมายเกี่ยวกับ "
                 "การสร้างความมั่งคั่งระยะยาว\n\n"
 
@@ -1894,7 +1894,7 @@ def get_contextual_insights(
 
         if "เกษียณ" in goal:
 
-            return (
+            insights.append (
                 "💡 คุณมีเป้าหมายเกี่ยวกับ "
                 "การสร้างความมั่งคั่งในระยะยาว\n\n"
                 "ก่อนเพิ่มสินทรัพย์ที่ซับซ้อนมากขึ้น "
@@ -1918,7 +1918,7 @@ def get_contextual_insights(
 
     if asset_name == "Bitcoin":
 
-        return (
+        insights.append (
             "💡 ก่อนตัดสินใจลงทุน "
             "Herby อยากชวนให้คุณพิจารณา "
             "บทบาทของ Bitcoin ในพอร์ต\n\n"
@@ -1936,7 +1936,7 @@ def get_contextual_insights(
             or timeline == "มากกว่า 20 ปี"
         ):
 
-            return (
+            insights.append (
                 "💡 ระยะเวลาการลงทุนของคุณ "
                 "ช่วยเปิดโอกาสให้ใช้ประโยชน์ "
                 "จากการเติบโตของธุรกิจระดับโลกได้มากขึ้น\n\n"
@@ -1949,7 +1949,7 @@ def get_contextual_insights(
 
     if asset_name == "REIT":
 
-        return (
+        insights.append (
             "💡 REIT อาจช่วยเพิ่มความหลากหลาย "
             "ให้พอร์ตของคุณ\n\n"
             "อย่างไรก็ตาม "
@@ -1962,7 +1962,7 @@ def get_contextual_insights(
 
     if asset_name == "ทองคำ":
 
-        return (
+        insights.append (
             "💡 Herby อยากชวนให้คุณคิดว่า "
             "คุณกำลังมองทองคำเพื่ออะไร\n\n"
             "เพื่อกระจายความเสี่ยง "
@@ -1975,7 +1975,7 @@ def get_contextual_insights(
         and asset_name == "หุ้นต่างประเทศ"
     ):
 
-        return (
+        insights.append  (
             "💡 การลงทุนในหุ้นต่างประเทศ "
             "สามารถสร้างโอกาสการเติบโตได้\n\n"
 
@@ -1987,14 +1987,14 @@ def get_contextual_insights(
             "ได้มากกว่าการเลือกหุ้นรายตัว"
         )
 
-    return (
+    insights.append  (
         "💡 สินทรัพย์แต่ละประเภท "
         "สามารถมีบทบาทแตกต่างกันได้\n\n"
         "Herby อยากให้คุณพิจารณาว่า "
         "สินทรัพย์นี้กำลังสนับสนุน "
         "เป้าหมายทางการเงินของคุณอย่างไร"
     )
-
+    return insights
 
 def render_asset_detail():
 
