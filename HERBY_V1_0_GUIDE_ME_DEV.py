@@ -2644,10 +2644,10 @@ def render_dashboard():
             st.session_state.guide_me_selected_asset = None
             go_to("guide_me")
 
-        if st.button("ทบทวนโปรไฟล์ของฉัน", use_container_width=True):
+        if st.button("👤 ทบทวนโปรไฟล์ของฉัน", use_container_width=True):
             st.session_state.review_result = result
             go_to("review")
-        if st.button("อัปเดตคำตอบใหม่", use_container_width=True):
+        if st.button("↩️ อัปเดตคำตอบใหม่", use_container_width=True):
             clear_results()
             go_to("questionnaire")
         if st.button("📚 ดูประวัติการประเมิน", use_container_width=True):
@@ -2658,7 +2658,7 @@ def render_dashboard():
             go_to("questionnaire")
     if st.button("❤️ เรื่องราวของ Herby", use_container_width=True):
         go_to("about")
-    if st.button("ออกจากระบบ", use_container_width=True):
+    if st.button("📤 ออกจากระบบ", use_container_width=True):
         logout()
 
 def render_review():
