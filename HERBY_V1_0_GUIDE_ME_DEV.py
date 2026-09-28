@@ -2168,9 +2168,9 @@ def render_asset_detail():
         )
     )
     for insight in contextual_insights:
-    st.info(
-        insight
-    )
+        st.info(
+            insight
+        )
 
     st.divider()
 
