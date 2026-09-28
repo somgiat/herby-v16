@@ -1172,7 +1172,7 @@ def render_login():
     with st.form("login_form"):
         nickname = st.text_input("Nickname")
         pin = st.text_input("PIN ตัวเลข 4 หลัก", type="password", max_chars=4)
-        submitted = st.form_submit_button("💚 ให้ Herby จำฉัน", use_container_width=True)
+        submitted = st.form_submit_button("Herby ฉันกลับมาแล้ว", use_container_width=True)
     if submitted:
         try:
             profile = find_profile(nickname)
