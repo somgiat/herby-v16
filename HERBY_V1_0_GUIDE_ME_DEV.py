@@ -1129,21 +1129,21 @@ def render_home():
     st.subheader("Your Digital Financial Mentor")
     st.markdown("### เราไม่ได้ช่วยคุณเลือกสินทรัพย์\n### เราช่วยให้คุณเข้าใจตัวเองมากขึ้น")
     st.write("ก่อนถามว่า ‘ควรลงทุนอะไร?’ Herby อยากเข้าใจก่อนว่า คนที่จะลงทุนคือใคร")
-    if st.button("💚 ฉันเป็นผู้ใช้ใหม่", type="primary", use_container_width=True):
+    if st.button("ฉันเป็นผู้ใช้ใหม่", type="primary", use_container_width=True):
         go_to("register")
-    if st.button("💚 ฉันเคยทำแบบประเมินแล้ว", use_container_width=True):
+    if st.button("ฉันเคยทำแบบประเมินแล้ว", use_container_width=True):
         go_to("login")
     if st.button("🔐 Admin"):
         go_to("admin_login")
 
 def render_register():
     render_back_button("home")
-    st.title("💚 สร้างโปรไฟล์ Herby")
+    st.title("สร้างโปรไฟล์ Herby")
     with st.form("register_form"):
         nickname = st.text_input("Nickname", max_chars=40)
         pin = st.text_input("PIN ตัวเลข 4 หลัก", type="password", max_chars=4)
         consent = st.checkbox("ฉันยินยอมให้ Herby บันทึก Nickname, PIN แบบเข้ารหัส และผลการประเมิน เพื่อเรียกดูโปรไฟล์ภายหลัง")
-        submitted = st.form_submit_button("💚 ตรวจสอบและสร้างโปรไฟล์", use_container_width=True)
+        submitted = st.form_submit_button("ตรวจสอบและสร้างโปรไฟล์", use_container_width=True)
     if submitted:
         nickname = normalize_nickname(nickname)
         if not nickname:
@@ -1168,7 +1168,7 @@ def render_register():
 
 def render_login():
     render_back_button("home")
-    st.title("💚 ยินดีต้อนรับกลับ")
+    st.title("ยินดีต้อนรับการกลับมา")
     with st.form("login_form"):
         nickname = st.text_input("Nickname")
         pin = st.text_input("PIN ตัวเลข 4 หลัก", type="password", max_chars=4)
@@ -1242,7 +1242,7 @@ def render_results(result):
     st.header("❓ Herby เข้าใจคุณถูกไหม?")
 
     feedback_accuracy = st.radio(
-        "💚 ผลลัพธ์นี้ตรงกับตัวคุณมากแค่ไหน?",
+        "ผลลัพธ์นี้ตรงกับตัวคุณมากแค่ไหน?",
         [
             "👍 ตรงมาก",
             "🙂 ค่อนข้างตรง",
@@ -1310,7 +1310,7 @@ Founder ของ Herby เคยเป็นนักลงทุนประ�
 
 Herby จึงเกิดขึ้นเพื่อช่วยให้เราเข้าใจตัวเอง ก่อนตัดสินใจเรื่องการลงทุน
     """)
-    if st.button("💚 ไปที่ Dashboard", type="primary", use_container_width=True):
+    if st.button("ไปที่ Dashboard", type="primary", use_container_width=True):
         go_to("dashboard")
 
 def render_result_snapshot(result):
