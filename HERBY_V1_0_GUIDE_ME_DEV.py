@@ -1830,11 +1830,11 @@ def get_contextual_insight(
         "goal",
         "",
     )
-    age = answer.get (
+    age = answers.get (
         "age",
         ""
     )
-    occupation = answer.get(
+    occupation = answers.get(
         "occupation",
         ""
     )
