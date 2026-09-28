@@ -1830,7 +1830,14 @@ def get_contextual_insight(
         "goal",
         "",
     )
-
+    age = answer.get (
+        "age",
+        ""
+    )
+    occupation = answer.get(
+        "occupation",
+        ""
+    )
     experience = answers.get(
         "experience",
         "",
@@ -1840,7 +1847,23 @@ def get_contextual_insight(
         "timeline",
         "",
     )
+    if (
+            "เกษียณ" in goal
+        ):
 
+            return (
+                "💡 คุณมีเป้าหมายเกี่ยวกับ "
+                "การสร้างความมั่งคั่งระยะยาว\n\n"
+
+                "หากคุณเป็นผู้มีรายได้ที่ต้องเสียภาษี "
+                "Herby อยากชวนให้คุณพิจารณา "
+                "RMF ควบคู่กับการลงทุน\n\n"
+
+                "RMF อาจช่วยทั้งด้านการลงทุน "
+                "ระยะยาวและสิทธิประโยชน์ทางภาษี"
+            )
+
+    
     # ETF
 
     if asset_name == "ETF หุ้น":
