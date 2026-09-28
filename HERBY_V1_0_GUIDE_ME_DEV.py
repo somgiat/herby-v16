@@ -1815,7 +1815,7 @@ def get_personalized_warning(
 
     return warning_map.get(style_name)
 
-def get_contextual_insight(
+def get_contextual_insights(
     style_name,
     asset_name,
     result,
@@ -1838,6 +1838,7 @@ def get_contextual_insight(
         "occupation",
         ""
     )
+    insights = []
     experience = answers.get(
         "experience",
         "",
