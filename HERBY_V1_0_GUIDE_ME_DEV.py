@@ -327,7 +327,8 @@ STYLE_ASSET_MAPPING = {
 # Discovery Universe
 # ============================================================
 
-DISCOVERY_UNIVERSE = [
+DISCOVERY_UNIVERSE = {
+    "us_quality":[
         {
             "symbol": "MSFT",
             "name": "Microsoft",
@@ -358,7 +359,7 @@ DISCOVERY_UNIVERSE = [
 
         ...
     ]
-
+}
 
 # ============================================================
 # SESSION STATE
