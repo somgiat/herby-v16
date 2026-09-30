@@ -1716,7 +1716,29 @@ def calculate_user_fit_score(
     )
 
     return score
-    
+
+def calculate_stock_match_score(
+    candidate,
+    user_fit_score,
+):
+
+    score = (
+
+        candidate["business_quality"] * 0.30
+
+        + candidate["financial_strength"] * 0.20
+
+        + candidate["growth_quality"] * 0.20
+
+        + candidate["competitive_advantage"] * 0.15
+
+        + user_fit_score * 0.15
+
+    )
+
+    return round(score)
+
+
 def build_asset_suitability_results(result):
 
     suitability_results = []
