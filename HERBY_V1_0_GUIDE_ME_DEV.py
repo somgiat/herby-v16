@@ -1632,7 +1632,27 @@ def calculate_user_fit_score(
     levels = get_profile_numeric_levels(
         result
     )
-    return 50
+
+    score = 50
+
+    risk_diff = abs(
+    levels["risk"]
+    - candidate["risk_level"]
+    )
+
+    if risk_diff == 0:
+
+        score += 15
+
+    elif risk_diff == 1:
+
+        score += 8
+
+    else:
+
+        score -= 12
+
+    return score
     
 def build_asset_suitability_results(result):
 
