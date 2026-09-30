@@ -1743,8 +1743,7 @@ def build_discovery_candidates(
 
     candidates = []
 
-    for candidate in 
-        DISCOVERY_UNIVERSE["us_quality"]:
+    for candidate in DISCOVERY_UNIVERSE["us_quality"]:
 
         user_fit_score = (
             calculate_user_fit_score(
