@@ -1797,6 +1797,29 @@ def build_discovery_candidates(
     )
 
     return candidates
+def render_asset_discovery_test(result):
+
+    candidates = build_discovery_candidates(
+        result
+    )
+
+    st.header(
+        "🚀 Discovery Engine Test"
+    )
+
+    for candidate in candidates[:10]:
+
+        st.write(
+
+            f"{candidate['symbol']} | "
+
+            f"Match: {candidate['stock_match_score']} | "
+
+            f"Quality: {candidate['quality_score']} | "
+
+            f"Fit: {candidate['user_fit_score']}"
+
+        )
 
         
 def build_asset_suitability_results(result):
@@ -2749,7 +2772,10 @@ def render_guide_me():
         "ยังไม่ได้ประเมินผลิตภัณฑ์หรือหุ้นรายตัว "
         "ราคา มูลค่า ข่าว หรือจังหวะเข้าซื้อ"
     )
-
+    st.divider()
+    render_asset_discovery_test(
+        result
+    )
     st.divider()
 
     st.header("🧪 Guide Me Closed Alpha")
