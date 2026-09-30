@@ -1632,7 +1632,8 @@ def calculate_user_fit_score(
     levels = get_profile_numeric_levels(
         result
     )
-
+    return 50
+    
 def build_asset_suitability_results(result):
 
     suitability_results = []
