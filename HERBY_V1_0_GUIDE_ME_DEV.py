@@ -1745,7 +1745,6 @@ def build_discovery_candidates(
 
     for candidate in DISCOVERY_UNIVERSE["us_quality"]:
 
-        st.write(candidate)
         
         user_fit_score = (
             calculate_user_fit_score(
