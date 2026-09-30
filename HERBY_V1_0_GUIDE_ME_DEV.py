@@ -1625,6 +1625,13 @@ def score_asset_suitability(
         "weaknesses": asset_profile["weaknesses"],
         "general_cautions": asset_profile["general_cautions"],
     }
+def calculate_user_fit_score(
+    candidate,
+    result,
+):
+    levels = get_profile_numeric_levels(
+        result
+    )
 
 def build_asset_suitability_results(result):
 
