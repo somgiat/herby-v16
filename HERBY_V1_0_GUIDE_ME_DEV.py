@@ -1628,6 +1628,8 @@ def calculate_user_fit_score(
     candidate,
     result,
 ):
+    st.write("DEBUG")
+    st.write(candidate.keys())
     levels = get_profile_numeric_levels(
         result
     )
