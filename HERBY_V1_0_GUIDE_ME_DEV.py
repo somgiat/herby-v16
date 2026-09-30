@@ -1651,6 +1651,23 @@ def calculate_user_fit_score(
     else:
 
         score -= 12
+    
+    growth_diff = abs(
+        levels["growth"]
+        - candidate["growth_level"]
+    )
+
+    if growth_diff == 0:
+
+        score += 15
+
+    elif growth_diff == 1:
+
+        score += 8
+
+    else:
+
+        score -= 8
 
     return score
     
