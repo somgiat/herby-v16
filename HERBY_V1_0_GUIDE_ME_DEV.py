@@ -1669,6 +1669,52 @@ def calculate_user_fit_score(
 
         score -= 8
 
+    if levels["timeline"] >= 4:
+
+        score += 10
+
+    elif levels["timeline"] == 3:
+
+        score += 5
+
+    else:
+
+        score -= 10
+
+    if levels["experience"] >= 3:
+
+        score += 5
+
+    elif levels["experience"] == 2:
+
+        score += 2
+
+    else:
+
+        score -= 5
+
+    if (
+        levels["safety"] >= 4
+        and candidate["volatility_level"] >= 4
+    ):
+
+        score -= 15
+
+    if (
+        candidate["volatility_level"] >= 4
+        and levels["behavior"] >= 4
+    ):
+
+        score += 10
+
+    score = max(
+        0,
+        min(
+            100,
+            round(score)
+        )
+    )
+
     return score
     
 def build_asset_suitability_results(result):
