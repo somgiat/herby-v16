@@ -357,7 +357,6 @@ DISCOVERY_UNIVERSE = {
             "volatility_level": 3,
         },
 
-        ...
     ]
 }
 
