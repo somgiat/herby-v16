@@ -322,6 +322,40 @@ STYLE_ASSET_MAPPING = {
     ],
 }
 
+DISCOVERY_UNIVERSE = {
+    "us_quality": [
+        {
+            "symbol": "MSFT",
+            "name": "Microsoft",
+            "category": "US Quality Compounder",
+            "portfolio_role": "Core Growth",
+            "business_quality": 95,
+            "financial_strength": 96,
+            "growth_quality": 90,
+            "competitive_advantage": 95,
+            "risk_level": 3,
+            "growth_level": 5,
+            "volatility_level": 2,
+        },
+
+        {
+            "symbol": "AVGO",
+            "name": "Broadcom",
+            "category": "US Quality Compounder",
+            "portfolio_role": "Core Growth",
+            "business_quality": 95,
+            "financial_strength": 93,
+            "growth_quality": 92,
+            "competitive_advantage": 94,
+            "risk_level": 3,
+            "growth_level": 5,
+            "volatility_level": 3,
+        },
+
+        ...
+    ]
+}
+
 
 # ============================================================
 # SESSION STATE
