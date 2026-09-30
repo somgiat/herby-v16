@@ -1738,7 +1738,67 @@ def calculate_stock_match_score(
 
     return round(score)
 
+def build_discovery_candidates(
+    result,
+):
 
+    candidates = []
+
+    for candidate in DISCOVERY_UNIVERSE:
+
+        user_fit_score = (
+            calculate_user_fit_score(
+                candidate,
+                result,
+            )
+        )
+
+        stock_match_score = (
+            calculate_stock_match_score(
+                candidate,
+                user_fit_score,
+            )
+        )
+
+        quality_score = round(
+
+            (
+                candidate["business_quality"]
+                + candidate["financial_strength"]
+                + candidate["growth_quality"]
+                + candidate["competitive_advantage"]
+            ) / 4
+
+        )
+
+        candidates.append(
+
+            {
+                "symbol": candidate["symbol"],
+                "name": candidate["name"],
+
+                "category": candidate["category"],
+
+                "portfolio_role": candidate["portfolio_role"],
+
+                "stock_match_score": stock_match_score,
+
+                "quality_score": quality_score,
+
+                "user_fit_score": user_fit_score,
+            }
+
+        )
+
+    candidates = sorted(
+        candidates,
+        key=lambda x: x["stock_match_score"],
+        reverse=True,
+    )
+
+    return candidates
+
+        
 def build_asset_suitability_results(result):
 
     suitability_results = []
