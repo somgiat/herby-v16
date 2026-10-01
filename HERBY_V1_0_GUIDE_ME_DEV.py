@@ -2442,7 +2442,8 @@ def render_asset_discovery_test(result):
     st.header(
         "🚀 Discovery Engine Test"
     )
-
+    st.write(f"total Candidates: {len(candidates)}"
+    )
     for candidate in candidates:
 
         st.write(
