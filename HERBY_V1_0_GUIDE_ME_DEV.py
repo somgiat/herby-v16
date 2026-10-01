@@ -1998,7 +1998,17 @@ def build_discovery_candidates(
 
     candidates = []
 
-    for candidate in DISCOVERY_UNIVERSE["us_quality"]:
+    candidate_groups = []
+    
+    candidate_groups.extend(
+        DISCOVERY_UNIVERSE["us_quality"]
+    )
+    
+    candidate_groups.extend(
+        DISCOVERY_UNIVERSE["us_defensive"]
+    )
+    
+    for candidate in candidate_groups:
 
         
         user_fit_score = (
