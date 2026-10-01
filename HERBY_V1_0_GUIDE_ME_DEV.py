@@ -1896,11 +1896,7 @@ def calculate_user_fit_score(
             round(score)
         )
     )
-    st.write(
-        candidate["symbol"],
-        score,
-        levels
-    )
+    
     return score
 
 def calculate_stock_match_score(
