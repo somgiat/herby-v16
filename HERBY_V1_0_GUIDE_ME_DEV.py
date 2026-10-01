@@ -536,11 +536,83 @@ DISCOVERY_UNIVERSE = {
             "risk_level": 3,
             "growth_level": 4,
             "volatility_level": 3,
+        },  
+    ],
+    
+    "us_defensive": [
+
+        {
+            "symbol": "BRK.B",
+            "name": "Berkshire Hathaway",
+            "category": "US Defensive Quality",
+            "portfolio_role": "Core Defensive",
+            "business_quality": 95,
+            "financial_strength": 98,
+            "growth_quality": 78,
+            "competitive_advantage": 95,
+            "risk_level": 2,
+            "growth_level": 3,
+            "volatility_level": 2,
         },
 
-            
-        
+        {
+            "symbol": "JNJ",
+            "name": "Johnson & Johnson",
+            "category": "US Defensive Quality",
+            "portfolio_role": "Core Defensive",
+            "business_quality": 92,
+            "financial_strength": 95,
+            "growth_quality": 72,
+            "competitive_advantage": 92,
+            "risk_level": 2,
+            "growth_level": 3,
+            "volatility_level": 2,
+        },
+
+        {
+            "symbol": "PG",
+            "name": "Procter & Gamble",
+            "category": "US Defensive Quality",
+            "portfolio_role": "Core Defensive",
+            "business_quality": 93,
+            "financial_strength": 92,
+            "growth_quality": 70,
+            "competitive_advantage": 94,
+            "risk_level": 2,
+            "growth_level": 3,
+            "volatility_level": 1,
+        },
+
+        {
+            "symbol": "KO",
+            "name": "Coca-Cola",
+            "category": "US Defensive Quality",
+            "portfolio_role": "Core Defensive",
+            "business_quality": 92,
+            "financial_strength": 91,
+            "growth_quality": 68,
+            "competitive_advantage": 95,
+            "risk_level": 2,
+            "growth_level": 2,
+            "volatility_level": 1,
+        },
+
+        {
+            "symbol": "WMT",
+            "name": "Walmart",
+            "category": "US Defensive Quality",
+            "portfolio_role": "Core Defensive",
+            "business_quality": 92,
+            "financial_strength": 90,
+            "growth_quality": 74,
+            "competitive_advantage": 92,
+            "risk_level": 2,
+            "growth_level": 3,
+            "volatility_level": 1,
+        }
+
     ]
+
 }
 
 # ============================================================
