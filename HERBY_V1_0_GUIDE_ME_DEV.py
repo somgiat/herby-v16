@@ -2464,10 +2464,7 @@ def group_candidates_by_role(
 
     return grouped
 
-
 def render_asset_discovery_test(result):
-
-    def render_asset_discovery_test(result):
 
     candidates = build_discovery_candidates(
         result
