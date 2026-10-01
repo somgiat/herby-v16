@@ -2467,15 +2467,124 @@ def group_candidates_by_role(
 
 def render_asset_discovery_test(result):
 
+    def render_asset_discovery_test(result):
+
     candidates = build_discovery_candidates(
         result
     )
 
-    st.header(
-        "🚀 Discovery Engine Test"
+    grouped = group_candidates_by_role(
+        candidates
     )
 
-    for candidate in candidates:
+    st.header(
+        "🏛️ Core Growth"
+    )
+
+    for candidate in grouped[
+        "Core Growth"
+    ]:
+
+        st.write(
+
+            f"{candidate['symbol']} | "
+
+            f"Match: {candidate['stock_match_score']} | "
+
+            f"Quality: {candidate['quality_score']} | "
+
+            f"Fit: {candidate['user_fit_score']}"
+
+        )
+
+    st.divider()
+
+    st.header(
+        "🚀 Satellite Growth"
+    )
+
+    for candidate in grouped[
+        "Satellite Growth"
+    ]:
+
+        st.write(
+
+            f"{candidate['symbol']} | "
+
+            f"Match: {candidate['stock_match_score']} | "
+
+            f"Quality: {candidate['quality_score']} | "
+
+            f"Fit: {candidate['user_fit_score']}"
+
+        )
+
+    st.divider()
+
+    st.header(
+        "🛡️ Core Defensive"
+    )
+
+    for candidate in grouped[
+        "Core Defensive"
+    ]:
+
+        st.write(
+
+            f"{candidate['symbol']} | "
+
+            f"Match: {candidate['stock_match_score']} | "
+
+            f"Quality: {candidate['quality_score']} | "
+
+            f"Fit: {candidate['user_fit_score']}"
+
+        )
+
+    st.divider()
+
+    st.header(
+        "📈 Supporting Growth"
+    )
+
+    for candidate in grouped[
+        "Supporting Growth"
+    ]:
+
+        st.write(
+
+            f"{candidate['symbol']} | "
+
+            f"Match: {candidate['stock_match_score']} | "
+
+            f"Quality: {candidate['quality_score']} | "
+
+            f"Fit: {candidate['user_fit_score']}"
+
+        )
+
+    st.divider()
+
+    st.header(
+        "💰 Income Portfolio"
+    )
+
+    for candidate in grouped[
+        "Income"
+    ]:
+
+        st.write(
+
+            f"{candidate['symbol']} | "
+
+            f"Match: {candidate['stock_match_score']} | "
+
+            f"Quality: {candidate['quality_score']} | "
+
+            f"Fit: {candidate['user_fit_score']}"
+
+        )
+
 
         st.write(
 
