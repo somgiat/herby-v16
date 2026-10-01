@@ -611,6 +611,365 @@ DISCOVERY_UNIVERSE = {
             "volatility_level": 1,
         }
 
+    ],
+        "future_leaders": [
+    
+        {
+            "symbol": "NVDA",
+            "name": "NVIDIA",
+            "category": "Future Leaders",
+            "portfolio_role": "Satellite Growth",
+            "business_quality": 96,
+            "financial_strength": 94,
+            "growth_quality": 99,
+            "competitive_advantage": 98,
+            "risk_level": 5,
+            "growth_level": 5,
+            "volatility_level": 5,
+        },
+    
+        {
+            "symbol": "TSM",
+            "name": "Taiwan Semiconductor",
+            "category": "Future Leaders",
+            "portfolio_role": "Satellite Growth",
+            "business_quality": 95,
+            "financial_strength": 92,
+            "growth_quality": 92,
+            "competitive_advantage": 97,
+            "risk_level": 4,
+            "growth_level": 5,
+            "volatility_level": 4,
+        },
+    
+        {
+            "symbol": "ARM",
+            "name": "ARM Holdings",
+            "category": "Future Leaders",
+            "portfolio_role": "Satellite Growth",
+            "business_quality": 85,
+            "financial_strength": 88,
+            "growth_quality": 95,
+            "competitive_advantage": 94,
+            "risk_level": 5,
+            "growth_level": 5,
+            "volatility_level": 5,
+        },
+    
+        {
+            "symbol": "CRDO",
+            "name": "Credo Technology",
+            "category": "Future Leaders",
+            "portfolio_role": "Satellite Growth",
+            "business_quality": 82,
+            "financial_strength": 85,
+            "growth_quality": 97,
+            "competitive_advantage": 88,
+            "risk_level": 5,
+            "growth_level": 5,
+            "volatility_level": 5,
+        },
+    
+        {
+            "symbol": "ALAB",
+            "name": "Astera Labs",
+            "category": "Future Leaders",
+            "portfolio_role": "Satellite Growth",
+            "business_quality": 82,
+            "financial_strength": 84,
+            "growth_quality": 98,
+            "competitive_advantage": 89,
+            "risk_level": 5,
+            "growth_level": 5,
+            "volatility_level": 5,
+        }
+    
+    ],
+    "thai_growth": [
+    
+        {
+            "symbol": "ADVANC",
+            "name": "Advanced Info Service",
+            "category": "Thai Growth",
+            "portfolio_role": "Supporting Growth",
+            "business_quality": 92,
+            "financial_strength": 90,
+            "growth_quality": 84,
+            "competitive_advantage": 92,
+            "risk_level": 3,
+            "growth_level": 4,
+            "volatility_level": 2,
+        },
+    
+        {
+            "symbol": "CPALL",
+            "name": "CP All",
+            "category": "Thai Growth",
+            "portfolio_role": "Supporting Growth",
+            "business_quality": 88,
+            "financial_strength": 82,
+            "growth_quality": 88,
+            "competitive_advantage": 90,
+            "risk_level": 3,
+            "growth_level": 4,
+            "volatility_level": 3,
+        },
+    
+        {
+            "symbol": "BDMS",
+            "name": "Bangkok Dusit Medical Services",
+            "category": "Thai Growth",
+            "portfolio_role": "Supporting Growth",
+            "business_quality": 92,
+            "financial_strength": 90,
+            "growth_quality": 82,
+            "competitive_advantage": 90,
+            "risk_level": 3,
+            "growth_level": 4,
+            "volatility_level": 2,
+        },
+    
+        {
+            "symbol": "BH",
+            "name": "Bumrungrad Hospital",
+            "category": "Thai Growth",
+            "portfolio_role": "Supporting Growth",
+            "business_quality": 93,
+            "financial_strength": 92,
+            "growth_quality": 85,
+            "competitive_advantage": 91,
+            "risk_level": 3,
+            "growth_level": 4,
+            "volatility_level": 3,
+        },
+    
+        {
+            "symbol": "BEM",
+            "name": "Bangkok Expressway and Metro",
+            "category": "Thai Growth",
+            "portfolio_role": "Supporting Growth",
+            "business_quality": 84,
+            "financial_strength": 80,
+            "growth_quality": 78,
+            "competitive_advantage": 85,
+            "risk_level": 3,
+            "growth_level": 3,
+            "volatility_level": 2,
+        },
+    
+        {
+            "symbol": "GULF",
+            "name": "Gulf Development",
+            "category": "Thai Growth",
+            "portfolio_role": "Supporting Growth",
+            "business_quality": 88,
+            "financial_strength": 80,
+            "growth_quality": 90,
+            "competitive_advantage": 84,
+            "risk_level": 4,
+            "growth_level": 5,
+            "volatility_level": 4,
+        },
+    
+        {
+            "symbol": "TRUE",
+            "name": "True Corporation",
+            "category": "Thai Growth",
+            "portfolio_role": "Supporting Growth",
+            "business_quality": 72,
+            "financial_strength": 68,
+            "growth_quality": 82,
+            "competitive_advantage": 82,
+            "risk_level": 4,
+            "growth_level": 4,
+            "volatility_level": 4,
+        },
+    
+        {
+            "symbol": "SCGP",
+            "name": "SCG Packaging",
+            "category": "Thai Growth",
+            "portfolio_role": "Supporting Growth",
+            "business_quality": 80,
+            "financial_strength": 82,
+            "growth_quality": 78,
+            "competitive_advantage": 82,
+            "risk_level": 3,
+            "growth_level": 4,
+            "volatility_level": 3,
+        },
+    
+        {
+            "symbol": "KTB",
+            "name": "Krung Thai Bank",
+            "category": "Thai Growth",
+            "portfolio_role": "Supporting Growth",
+            "business_quality": 84,
+            "financial_strength": 88,
+            "growth_quality": 80,
+            "competitive_advantage": 82,
+            "risk_level": 3,
+            "growth_level": 3,
+            "volatility_level": 3,
+        },
+    
+        {
+            "symbol": "KBANK",
+            "name": "Kasikornbank",
+            "category": "Thai Growth",
+            "portfolio_role": "Supporting Growth",
+            "business_quality": 86,
+            "financial_strength": 87,
+            "growth_quality": 82,
+            "competitive_advantage": 84,
+            "risk_level": 3,
+            "growth_level": 3,
+            "volatility_level": 3,
+        }
+    
+    ],
+    "thai_dividend": [
+    
+        {
+            "symbol": "PTT",
+            "name": "PTT",
+            "category": "Thai Dividend",
+            "portfolio_role": "Income",
+            "business_quality": 86,
+            "financial_strength": 90,
+            "growth_quality": 70,
+            "competitive_advantage": 88,
+            "risk_level": 2,
+            "growth_level": 2,
+            "volatility_level": 2,
+        },
+    
+        {
+            "symbol": "PTTEP",
+            "name": "PTTEP",
+            "category": "Thai Dividend",
+            "portfolio_role": "Income",
+            "business_quality": 88,
+            "financial_strength": 92,
+            "growth_quality": 72,
+            "competitive_advantage": 86,
+            "risk_level": 3,
+            "growth_level": 3,
+            "volatility_level": 3,
+        },
+    
+        {
+            "symbol": "TISCO",
+            "name": "TISCO",
+            "category": "Thai Dividend",
+            "portfolio_role": "Income",
+            "business_quality": 88,
+            "financial_strength": 90,
+            "growth_quality": 68,
+            "competitive_advantage": 84,
+            "risk_level": 2,
+            "growth_level": 2,
+            "volatility_level": 2,
+        },
+    
+        {
+            "symbol": "KKP",
+            "name": "KKP",
+            "category": "Thai Dividend",
+            "portfolio_role": "Income",
+            "business_quality": 86,
+            "financial_strength": 88,
+            "growth_quality": 66,
+            "competitive_advantage": 82,
+            "risk_level": 2,
+            "growth_level": 2,
+            "volatility_level": 2,
+        },
+    
+        {
+            "symbol": "TTW",
+            "name": "TTW",
+            "category": "Thai Dividend",
+            "portfolio_role": "Income",
+            "business_quality": 84,
+            "financial_strength": 88,
+            "growth_quality": 60,
+            "competitive_advantage": 84,
+            "risk_level": 1,
+            "growth_level": 2,
+            "volatility_level": 1,
+        },
+    
+        {
+            "symbol": "LH",
+            "name": "Land & Houses",
+            "category": "Thai Dividend",
+            "portfolio_role": "Income",
+            "business_quality": 82,
+            "financial_strength": 84,
+            "growth_quality": 62,
+            "competitive_advantage": 80,
+            "risk_level": 2,
+            "growth_level": 2,
+            "volatility_level": 2,
+        },
+    
+        {
+            "symbol": "AP",
+            "name": "AP Thailand",
+            "category": "Thai Dividend",
+            "portfolio_role": "Income",
+            "business_quality": 84,
+            "financial_strength": 86,
+            "growth_quality": 66,
+            "competitive_advantage": 82,
+            "risk_level": 2,
+            "growth_level": 2,
+            "volatility_level": 2,
+        },
+    
+        {
+            "symbol": "SPALI",
+            "name": "Supalai",
+            "category": "Thai Dividend",
+            "portfolio_role": "Income",
+            "business_quality": 84,
+            "financial_strength": 88,
+            "growth_quality": 68,
+            "competitive_advantage": 82,
+            "risk_level": 2,
+            "growth_level": 2,
+            "volatility_level": 2,
+        },
+    
+        {
+            "symbol": "INTUCH",
+            "name": "Intouch Holdings",
+            "category": "Thai Dividend",
+            "portfolio_role": "Income",
+            "business_quality": 88,
+            "financial_strength": 90,
+            "growth_quality": 66,
+            "competitive_advantage": 86,
+            "risk_level": 2,
+            "growth_level": 2,
+            "volatility_level": 2,
+        },
+    
+        {
+            "symbol": "SCC",
+            "name": "SCG",
+            "category": "Thai Dividend",
+            "portfolio_role": "Income",
+            "business_quality": 84,
+            "financial_strength": 86,
+            "growth_quality": 62,
+            "competitive_advantage": 84,
+            "risk_level": 2,
+            "growth_level": 2,
+            "volatility_level": 2,
+        }
+    
     ]
 
 }
@@ -2007,7 +2366,19 @@ def build_discovery_candidates(
     candidate_groups.extend(
         DISCOVERY_UNIVERSE["us_defensive"]
     )
+
+    candidate_groups.extend(
+    DISCOVERY_UNIVERSE["future_leaders"]
+    )
     
+    candidate_groups.extend(
+        DISCOVERY_UNIVERSE["thai_growth"]
+    )
+    
+    candidate_groups.extend(
+        DISCOVERY_UNIVERSE["thai_dividend"]
+    )
+
     for candidate in candidate_groups:
 
         
