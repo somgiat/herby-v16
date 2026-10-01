@@ -2433,6 +2433,38 @@ def build_discovery_candidates(
     )
 
     return candidates
+
+def group_candidates_by_role(
+    candidates,
+):
+
+    grouped = {
+
+        "Core Growth": [],
+
+        "Satellite Growth": [],
+
+        "Core Defensive": [],
+
+        "Income": [],
+
+        "Supporting Growth": [],
+
+    }
+
+    for candidate in candidates:
+
+        role = candidate["portfolio_role"]
+
+        if role in grouped:
+
+            grouped[role].append(
+                candidate
+            )
+
+    return grouped
+
+
 def render_asset_discovery_test(result):
 
     candidates = build_discovery_candidates(
