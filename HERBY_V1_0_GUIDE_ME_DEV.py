@@ -2072,7 +2072,7 @@ def render_asset_discovery_test(result):
         "🚀 Discovery Engine Test"
     )
 
-    for candidate in candidates[:10]:
+    for candidate in candidates:
 
         st.write(
 
