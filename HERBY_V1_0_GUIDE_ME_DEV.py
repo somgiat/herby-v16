@@ -2464,6 +2464,67 @@ def group_candidates_by_role(
 
     return grouped
 
+def build_fit_explanation(
+    candidate,
+):
+
+    reasons = []
+
+    role = candidate[
+        "portfolio_role"
+    ]
+
+    if role == "Core Growth":
+
+        reasons.append(
+            "เหมาะเป็นแกนหลักของพอร์ตการเติบโตระยะยาว"
+        )
+
+    elif role == "Satellite Growth":
+
+        reasons.append(
+            "เหมาะเป็นส่วนเสริมการเติบโตของพอร์ต"
+        )
+
+    elif role == "Core Defensive":
+
+        reasons.append(
+            "ช่วยเพิ่มความมั่นคงและลดความผันผวนของพอร์ต"
+        )
+
+    elif role == "Income":
+
+        reasons.append(
+            "เหมาะสำหรับการสร้างกระแสเงินสดและรายได้"
+        )
+
+    if candidate[
+        "growth_quality"
+    ] >= 90:
+
+        reasons.append(
+            "มีคุณภาพการเติบโตสูง"
+        )
+
+    if candidate[
+        "business_quality"
+    ] >= 90:
+
+        reasons.append(
+            "ธุรกิจมีความแข็งแกร่งในระยะยาว"
+        )
+
+    if candidate[
+        "financial_strength"
+    ] >= 90:
+
+        reasons.append(
+            "ฐานะการเงินแข็งแรง"
+        )
+
+    return reasons
+
+    
 def render_candidate_card(
     candidate
 ):
