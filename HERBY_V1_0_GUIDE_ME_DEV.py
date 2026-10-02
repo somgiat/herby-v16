@@ -2568,6 +2568,23 @@ def render_candidate_card(
             f"📌 {candidate['portfolio_role']}"
         )
 
+        reasons = (
+            build_fit_explanation(
+                candidate
+            )
+        )
+        
+        st.markdown(
+            "##### ✅ Why This Fits You"
+        )
+        
+        for reason in reasons:
+        
+            st.write(
+                f"• {reason}"
+            )
+
+        
         st.button(
             "🔍 ดูรายละเอียด",
             key=f"detail_"
