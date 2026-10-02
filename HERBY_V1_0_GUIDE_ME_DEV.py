@@ -2464,6 +2464,56 @@ def group_candidates_by_role(
 
     return grouped
 
+def render_candidate_card(
+    candidate
+):
+
+    with st.container(border=True):
+
+        st.subheader(
+            f"🏆 {candidate['symbol']}"
+        )
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+
+            st.metric(
+                "Match",
+                candidate[
+                    "stock_match_score"
+                ]
+            )
+
+        with col2:
+
+            st.metric(
+                "Quality",
+                candidate[
+                    "quality_score"
+                ]
+            )
+
+        with col3:
+
+            st.metric(
+                "Fit",
+                candidate[
+                    "user_fit_score"
+                ]
+            )
+
+        st.caption(
+            f"📌 {candidate['portfolio_role']}"
+        )
+
+        st.button(
+            "🔍 ดูรายละเอียด",
+            key=f"detail_"
+            f"{candidate['symbol']}"
+        )
+
+        
 def render_asset_discovery_test(result):
 
     candidates = build_discovery_candidates(
@@ -2482,16 +2532,8 @@ def render_asset_discovery_test(result):
         "Core Growth"
     ]:
 
-        st.write(
-
-            f"{candidate['symbol']} | "
-
-            f"Match: {candidate['stock_match_score']} | "
-
-            f"Quality: {candidate['quality_score']} | "
-
-            f"Fit: {candidate['user_fit_score']}"
-
+        render_candidate_card(
+            candidate
         )
 
     st.divider()
@@ -2504,16 +2546,8 @@ def render_asset_discovery_test(result):
         "Satellite Growth"
     ]:
 
-        st.write(
-
-            f"{candidate['symbol']} | "
-
-            f"Match: {candidate['stock_match_score']} | "
-
-            f"Quality: {candidate['quality_score']} | "
-
-            f"Fit: {candidate['user_fit_score']}"
-
+        render_candidate_card(
+            candidate
         )
 
     st.divider()
@@ -2525,17 +2559,9 @@ def render_asset_discovery_test(result):
     for candidate in grouped[
         "Core Defensive"
     ]:
-
-        st.write(
-
-            f"{candidate['symbol']} | "
-
-            f"Match: {candidate['stock_match_score']} | "
-
-            f"Quality: {candidate['quality_score']} | "
-
-            f"Fit: {candidate['user_fit_score']}"
-
+        
+        render_candidate_card(
+            candidate
         )
 
     st.divider()
@@ -2548,16 +2574,8 @@ def render_asset_discovery_test(result):
         "Supporting Growth"
     ]:
 
-        st.write(
-
-            f"{candidate['symbol']} | "
-
-            f"Match: {candidate['stock_match_score']} | "
-
-            f"Quality: {candidate['quality_score']} | "
-
-            f"Fit: {candidate['user_fit_score']}"
-
+        render_candidate_card(
+            candidate
         )
 
     st.divider()
@@ -2570,29 +2588,8 @@ def render_asset_discovery_test(result):
         "Income"
     ]:
 
-        st.write(
-
-            f"{candidate['symbol']} | "
-
-            f"Match: {candidate['stock_match_score']} | "
-
-            f"Quality: {candidate['quality_score']} | "
-
-            f"Fit: {candidate['user_fit_score']}"
-
-        )
-
-
-        st.write(
-
-            f"{candidate['symbol']} | "
-
-            f"Match: {candidate['stock_match_score']} | "
-
-            f"Quality: {candidate['quality_score']} | "
-
-            f"Fit: {candidate['user_fit_score']}"
-
+        render_candidate_card(
+            candidate
         )
 
         
