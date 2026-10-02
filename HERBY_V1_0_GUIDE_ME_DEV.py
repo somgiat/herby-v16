@@ -2422,6 +2422,14 @@ def build_discovery_candidates(
                 "quality_score": quality_score,
 
                 "user_fit_score": user_fit_score,
+                
+                "business_quality": candidate["business_quality"],
+
+                "financial_strength": candidate["financial_strength"],
+
+                "growth_quality": candidate["growth_quality"],
+
+                "competitive_advantage": candidate["competitive_advantage"],
             }
 
         )
