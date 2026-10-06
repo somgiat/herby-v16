@@ -3004,15 +3004,15 @@ def render_asset_suitability_card(
 
         if asset_name == "หุ้นต่างประเทศ":
 
-        if st.button(
-            "🔍 ดูหุ้นที่ Herby แนะนำ",
-            key="discover_foreign_stocks",
-            use_container_width=True,
-        ):
-    
-            go_to_asset_discovery(
-                asset_name
-            )
+            if st.button(
+                "🔍 ดูหุ้นที่ Herby แนะนำ",
+                key="discover_foreign_stocks",
+                use_container_width=True,
+            ):
+        
+                go_to_asset_discovery(
+                    asset_name
+                )
 
         
         if st.button(
