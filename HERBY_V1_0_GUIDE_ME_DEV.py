@@ -2621,6 +2621,9 @@ def go_to_candidate_detail(
 
 def render_asset_discovery():
 
+    st.write(
+        "ASSET DISCOVERY PAGE"
+    )
     st.title(
         "🔍 หุ้นที่ Herby แนะนำ"
     )
