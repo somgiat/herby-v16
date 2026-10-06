@@ -2607,7 +2607,7 @@ def render_candidate_card(
 def go_to_candidate_detail(candidate):
     st.session_state.selected_candidate = (
         candidate
-    ):
+):
     st.session_state.page = (
         "candidate_detail"
     )
