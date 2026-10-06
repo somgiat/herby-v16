@@ -988,6 +988,8 @@ def initialize_session_state():
     for key, value in defaults.items():
         if key not in st.session_state:
             st.session_state[key] = value
+        if "selected_candidate" not in st.session_state:
+            st.session_state.selected_candidate = None
 
 
 def clear_results():
@@ -2597,9 +2599,20 @@ def render_candidate_card(
             "🔍 ดูรายละเอียด",
             key=f"detail_"
             f"{candidate['symbol']}"
-        )
+        ):
+            go_to_candidate_detail(
+                candidate
+            )
 
-        
+def go_to_candidate_detail(candidate):
+    st.session_state.selected_candidate = (
+        candidate
+    )
+    st.session_state.page = (
+        "candidate_detail"
+    )
+    st.return()
+
 def render_asset_discovery_test(result):
 
     candidates = build_discovery_candidates(
