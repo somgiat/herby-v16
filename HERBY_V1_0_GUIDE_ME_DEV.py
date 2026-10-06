@@ -2613,6 +2613,156 @@ def go_to_candidate_detail(candidate):
     )
     st.return()
 
+def render_candidate_detail():
+
+    candidate = (
+        st.session_state.selected_candidate
+    )
+
+    if not candidate:
+
+        st.warning(
+            "ไม่พบข้อมูลหุ้น"
+        )
+
+        return
+
+    st.title(
+        f"🏆 {candidate['symbol']}"
+    )
+
+    st.caption(
+        candidate["portfolio_role"]
+    )
+
+    col1, col2, col3 = (
+        st.columns(3)
+    )
+
+    with col1:
+
+        st.metric(
+            "Match Score",
+            candidate[
+                "stock_match_score"
+            ]
+        )
+
+    with col2:
+
+        st.metric(
+            "Quality Score",
+            candidate[
+                "quality_score"
+            ]
+        )
+
+    with col3:
+
+        st.metric(
+            "User Fit",
+            candidate[
+                "user_fit_score"
+            ]
+        )
+
+    st.divider()
+
+    st.subheader(
+        "✅ Why This Fits You"
+    )
+
+    reasons = (
+        build_fit_explanation(
+            candidate
+        )
+    )
+
+    for reason in reasons:
+
+        st.write(
+            f"• {reason}"
+        )
+
+    st.divider()
+
+    st.subheader(
+        "🎯 Portfolio Role"
+    )
+
+    st.info(
+        candidate[
+            "portfolio_role"
+        ]
+    )
+
+    st.divider()
+
+    st.subheader(
+        "⚠️ What Could Go Wrong"
+    )
+
+    if (
+        candidate[
+            "portfolio_role"
+        ]
+        ==
+        "Satellite Growth"
+    ):
+
+        st.warning(
+            "หุ้นกลุ่มนี้มีโอกาสเติบโตสูง แต่มีความผันผวนสูงเช่นกัน"
+        )
+
+    elif (
+        candidate[
+            "portfolio_role"
+        ]
+        ==
+        "Core Growth"
+    ):
+
+        st.info(
+            "แม้เป็นหุ้นคุณภาพสูง แต่ยังมีความเสี่ยงจากการเปลี่ยนแปลงของธุรกิจและตลาด"
+        )
+
+    elif (
+        candidate[
+            "portfolio_role"
+        ]
+        ==
+        "Core Defensive"
+    ):
+
+        st.info(
+            "มีความมั่นคงกว่า แต่โอกาสเติบโตอาจต่ำกว่าหุ้นเติบโต"
+        )
+
+    elif (
+        candidate[
+            "portfolio_role"
+        ]
+        ==
+        "Income"
+    ):
+
+        st.info(
+            "รายได้จากปันผลอาจเปลี่ยนแปลงได้ตามผลประกอบการ"
+        )
+
+    st.divider()
+
+    if st.button(
+        "⬅️ กลับ"
+    ):
+
+        st.session_state.page = (
+            "guide_me"
+        )
+
+        st.rerun()
+
+        
 def render_asset_discovery_test(result):
 
     candidates = build_discovery_candidates(
