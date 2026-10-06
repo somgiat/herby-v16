@@ -2595,7 +2595,7 @@ def render_candidate_card(
             )
 
         
-        st.button(
+        if st.button(
             "🔍 ดูรายละเอียด",
             key=f"detail_"
             f"{candidate['symbol']}"
