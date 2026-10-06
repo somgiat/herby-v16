@@ -2628,22 +2628,32 @@ def render_asset_discovery():
         "🔍 หุ้นที่ Herby แนะนำ"
     )
 
-    latest = (
-        get_latest_assessment()
+    profile = get_current_profile()
+
+    if not profile:
+    
+        st.warning(
+            "ไม่พบโปรไฟล์"
+        )
+    
+        return
+    
+    latest = profile.get(
+        "latest_assessment"
     )
-
+    
     if not latest:
-
+    
         st.warning(
             "ไม่พบผลการประเมิน"
         )
-
+    
         return
+    
+    result = latest.get(
+        "result"
+    ) or {}
 
-    result = (
-        latest.get("result")
-        or {}
-    )
 
 
     st.divider()
