@@ -2642,9 +2642,6 @@ def render_asset_discovery():
         or {}
     )
 
-    render_asset_discovery_test(
-        result
-    )
 
     st.divider()
 
