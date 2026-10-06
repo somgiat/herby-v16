@@ -5084,6 +5084,7 @@ def go_to_asset_discovery(
         "admin_users": render_admin_users, "admin_user_detail": render_admin_user_detail,
         "admin_analytics": render_admin_analytics, "guide_me": render_guide_me,
         "asset_detail": render_asset_detail, "candidate_detail": render_candidate_detail,
+        "asset_discovery": render_asset_discovery,
     }
     routes.get(st.session_state.page, render_home)()
 
