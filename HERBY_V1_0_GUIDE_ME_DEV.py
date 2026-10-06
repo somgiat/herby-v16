@@ -2619,7 +2619,46 @@ def go_to_candidate_detail(
 
     st.rerun()
 
+def render_asset_discovery():
 
+    st.title(
+        "🔍 หุ้นที่ Herby แนะนำ"
+    )
+
+    latest = (
+        get_latest_assessment()
+    )
+
+    if not latest:
+
+        st.warning(
+            "ไม่พบผลการประเมิน"
+        )
+
+        return
+
+    result = (
+        latest.get("result")
+        or {}
+    )
+
+    render_asset_discovery_test(
+        result
+    )
+
+    st.divider()
+
+    if st.button(
+        "⬅️ กลับ"
+    ):
+
+        st.session_state.page = (
+            "guide_me"
+        )
+
+        st.rerun()
+
+    
 def render_candidate_detail():
 
     candidate = (
