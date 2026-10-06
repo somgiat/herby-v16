@@ -2604,14 +2604,20 @@ def render_candidate_card(
                 candidate
             )
 
-def go_to_candidate_detail(candidate):
+def go_to_candidate_detail(
+    candidate
+):
+
     st.session_state.selected_candidate = (
         candidate
-        
+    )
+
     st.session_state.page = (
         "candidate_detail"
     )
-    st.return()
+
+    st.rerun()
+
 
 def render_candidate_detail():
 
