@@ -5077,15 +5077,6 @@ def render_admin_analytics():
             f"{error}"
         )
 
-
-def main():
-    initialize_session_state()
-    apply_green_theme()
-    url, key = get_supabase_config()
-    if not url or not key:
-        st.error("ยังไม่ได้ตั้งค่า Supabase กรุณาเพิ่ม SUPABASE_URL และ SUPABASE_KEY ใน Streamlit Secrets")
-        st.stop()
-
 def go_to_asset_discovery(
     asset_name
 ):
@@ -5100,18 +5091,66 @@ def go_to_asset_discovery(
 
     st.rerun()
 
-    
+
+def main():
+
+    initialize_session_state()
+
+    apply_green_theme()
+
+    url, key = get_supabase_config()
+
+    if not url or not key:
+
+        st.error(
+            "ยังไม่ได้ตั้งค่า Supabase กรุณาเพิ่ม SUPABASE_URL และ SUPABASE_KEY ใน Streamlit Secrets"
+        )
+
+        st.stop()
+
     routes = {
-        "home": render_home, "register": render_register, "login": render_login,
-        "questionnaire": render_questionnaire, "about": render_about,
-        "dashboard": render_dashboard, "review": render_review, "history": render_history,
-        "admin_login": render_admin_login, "admin_dashboard": render_admin_dashboard,
-        "admin_users": render_admin_users, "admin_user_detail": render_admin_user_detail,
-        "admin_analytics": render_admin_analytics, "guide_me": render_guide_me,
-        "asset_detail": render_asset_detail, "candidate_detail": render_candidate_detail,
+
+        "home": render_home,
+        "register": render_register,
+        "login": render_login,
+
+        "questionnaire": render_questionnaire,
+
+        "about": render_about,
+
+        "dashboard": render_dashboard,
+
+        "review": render_review,
+
+        "history": render_history,
+
+        "admin_login": render_admin_login,
+
+        "admin_dashboard": render_admin_dashboard,
+
+        "admin_users": render_admin_users,
+
+        "admin_user_detail": render_admin_user_detail,
+
+        "admin_analytics": render_admin_analytics,
+
+        "guide_me": render_guide_me,
+
+        "asset_detail": render_asset_detail,
+
+        "candidate_detail": render_candidate_detail,
+
         "asset_discovery": render_asset_discovery,
+
     }
-    routes.get(st.session_state.page, render_home)()
+
+    routes.get(
+        st.session_state.page,
+        render_home
+    )()
+
 
 if __name__ == "__main__":
+
     main()
+
