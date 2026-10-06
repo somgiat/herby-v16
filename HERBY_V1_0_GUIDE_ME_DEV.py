@@ -990,7 +990,8 @@ def initialize_session_state():
             st.session_state[key] = value
         if "selected_candidate" not in st.session_state:
             st.session_state.selected_candidate = None
-
+        if "selected_asset" not in st.session_state:
+            st.session_state.selected_asset = None
 
 def clear_results():
     st.session_state.show_results = False
@@ -5020,6 +5021,22 @@ def main():
     if not url or not key:
         st.error("ยังไม่ได้ตั้งค่า Supabase กรุณาเพิ่ม SUPABASE_URL และ SUPABASE_KEY ใน Streamlit Secrets")
         st.stop()
+
+def go_to_asset_discovery(
+    asset_name
+):
+
+    st.session_state.selected_asset = (
+        asset_name
+    )
+
+    st.session_state.page = (
+        "asset_discovery"
+    )
+
+    st.rerun()
+
+    
     routes = {
         "home": render_home, "register": render_register, "login": render_login,
         "questionnaire": render_questionnaire, "about": render_about,
